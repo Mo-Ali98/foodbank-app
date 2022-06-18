@@ -14,4 +14,5 @@ export interface IEvent {
   EventLocation: string;
   EventDate: string;
   EventLink: string;
+  OrgId: string;
 }
