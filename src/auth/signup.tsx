@@ -59,10 +59,7 @@ export const SignUp = () => {
             <button type="submit" className="btn btn-primary">
               SignUp
             </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => navigate("/login")}
-            >
+            <button className="btn btn-primary" type="submit">
               logIn
             </button>
           </div>
