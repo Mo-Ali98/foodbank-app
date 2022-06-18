@@ -5,5 +5,4 @@ export interface IEvent {
   EventDate: string;
   EventLink: string;
   OrgId: string;
-  EventID: string;
 }
