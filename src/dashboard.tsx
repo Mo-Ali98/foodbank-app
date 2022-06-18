@@ -54,7 +54,7 @@ export const Dashboard = () => {
           EventDescription: EventDescription,
           EventLocation: EventLocation,
           EventDate: EventDate,
-          EventLink: `/volunteer/${user.uid}/${eventName.replaceAll(" ", "-")}`,
+          EventLink: `/volunteer/${user.uid}`,
           OrgId: user.uid,
         };
         await addDoc(collection(db, "events"), newEvent);
