@@ -15,13 +15,11 @@ export const Volunteer = () => {
   const [VolunteerEmail, setVolunteerEmail] = useState<string>("");
   const [VolunteerNumber, setVolunteerNumber] = useState<string>("");
   const [EventsData, setEventData] = useState<DocumentData>();
-  const [VolunteerData, setVolunteerData] = useState<string[]>([""]);
+  const [SelectedEvents, setSelectedEvents] = useState<string[]>([]);
 
   const url = window.location.href.split("/");
 
   const orgID = url[4];
-
-  const eventsChosen = Array<string>();
 
   //Finds all the events for the org given a url of /volunteer/orgID.
   useEffect(() => {
@@ -39,12 +37,16 @@ export const Volunteer = () => {
     getData();
   }, [orgID]);
 
-  // Appends to eventsChosen array Onchange. However when i push below, shows console empty.
-  const appendToEventsChosen = (value: string) => {
-    eventsChosen.push(value);
-    setVolunteerData(eventsChosen);
-    console.log(VolunteerData);
+  //Handles adding eventIds to list
+  const toggleEventSelection = (eventId: string) => {
+    if (SelectedEvents.includes(eventId)) {
+      setSelectedEvents((ids) => [...ids].filter((id) => id !== eventId));
+    } else {
+      setSelectedEvents((ids) => [...ids, eventId]);
+    }
   };
+
+  console.log(SelectedEvents);
 
   // Renders events on page + checkboxes for now
   const renderEvents = EventsData?.map((doc: any) => {
@@ -54,7 +56,7 @@ export const Volunteer = () => {
         <input
           type="checkbox"
           id={data.EventName}
-          onChange={() => appendToEventsChosen(data.EventID)}
+          onChange={() => toggleEventSelection(doc.id)}
         />
         {data.EventName} - {data.EventDate}
       </p>
@@ -69,7 +71,7 @@ export const Volunteer = () => {
         lastName: VolunteerLastName,
         email: VolunteerEmail,
         number: VolunteerNumber,
-        eventID: eventsChosen,
+        eventID: SelectedEvents,
       };
 
       await setDoc(doc(db, "Volunteer", VolunteerFirstName), {
