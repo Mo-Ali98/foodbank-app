@@ -6,24 +6,26 @@ import { SignUp } from "./auth/signup";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Dashboard } from "./dashboard";
 import { PrivateRoute } from "./privateRouter";
+import { Volunteer } from "./pages/Volunteer";
 
 export const App = () => {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+    // <BrowserRouter>
+    //   <AuthProvider>
+    //     <Routes>
+    //       <Route
+    //         path="/"
+    //         element={
+    //           <PrivateRoute>
+    //             <Dashboard />
+    //           </PrivateRoute>
+    //         }
+    //       />
+    //       <Route path="/signup" element={<SignUp />} />
+    //       <Route path="/login" element={<Login />} />
+    //     </Routes>
+    //   </AuthProvider>
+    // </BrowserRouter>
+    <Volunteer/>
   );
 };
