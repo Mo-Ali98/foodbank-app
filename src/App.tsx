@@ -10,8 +10,8 @@ import { Volunteer } from "./volunteer";
 
 export const App = () => {
   return (
-    <BrowserRouter>
-      <AuthProvider>
+    <AuthProvider>
+      <BrowserRouter>
         <Routes>
           <Route
             path="/"
@@ -23,11 +23,9 @@ export const App = () => {
           />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/volunteer/*" element={<Volunteer />} />
         </Routes>
-      </AuthProvider>
-      <Routes>
-      <Route path="/volunteer/*" element={<Volunteer />} />
-      </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
