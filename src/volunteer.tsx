@@ -37,6 +37,14 @@ export const Volunteer = () => {
     getData();
   }, [orgID]);
 
+  if (!orgID) {
+    return (
+      <>
+        <h1>Event does not exist</h1>
+      </>
+    );
+  }
+
   //Handles adding eventIds to list
   const toggleEventSelection = (eventId: string) => {
     if (SelectedEvents.includes(eventId)) {
