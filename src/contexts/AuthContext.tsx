@@ -59,12 +59,13 @@ export const AuthProvider = ({ children }: any) => {
       const newOrg: IOrganisation = {
         adddressLine: "",
         emailAddress: userInfo?.email || "",
-        orgName: "Org example",
-        phoneNumeber: "092342",
-        postcode: "SE ...",
+        orgName: "Org example 2",
+        phoneNumeber: "2423424234",
+        postcode: "NW ...",
       };
 
       await setDoc(doc(db, "organisation", userInfo?.uid || ""), newOrg);
+      await setDoc(doc(db, "events", userInfo?.uid || ""), {});
     } catch (error) {
       console.error(error);
     }

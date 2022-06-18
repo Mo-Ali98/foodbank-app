@@ -7,3 +7,11 @@ export interface IOrganisation {
   emailAddress: string;
   postcode: string;
 }
+
+export interface IEvent {
+  EventName: string;
+  EventDescription: string;
+  EventLocation: string;
+  EventDate: string;
+  EventLink: string;
+}
