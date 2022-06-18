@@ -5,12 +5,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MSG_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  apiKey: "AIzaSyAYELTUmPug2_hTs7f_rfVhR4TVlLcyKrs",
+  authDomain: "food-bank-6e406.firebaseapp.com",
+  projectId: "food-bank-6e406",
+  storageBucket: "food-bank-6e406.appspot.com",
+  messagingSenderId: "608759665943",
+  appId: "1:608759665943:web:ab3d8bb57c152e504f5352",
 };
 
 // Initialize Firebase
