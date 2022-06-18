@@ -28,56 +28,64 @@ export const Login = () => {
   };
 
   return (
-    <div
-      className="container d-flex flex-column align-content-center justify-content-center"
-      style={{ maxWidth: "400px" }}
-    >
-      {!loading ? (
-        <>
-          <form onSubmit={submitForm} className="p-5 border">
-            <h2 className="text-center mb-3">Log In</h2>
-            <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">
-                Email address
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                required
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPassword1" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                required
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+    <>
+      <nav className="navbar navbar-light bg-light">
+        <div className="mx-4">
+          <div className="d-flex align-items-center">
+            <img
+              src="https://i.pinimg.com/564x/be/d3/0d/bed30ddfa5d434e827c775ac9a3b0d38.jpg"
+              width="30"
+              height="30"
+              className="d-inline-block align-top mx-2"
+              alt="Logo here"
+            />
+            Volunteria
+          </div>
+        </div>
+      </nav>
+      <div
+        className="container d-flex flex-column align-content-center justify-content-center"
+        style={{ maxWidth: "600px", maxHeight: "80vh" }}
+      >
+        <form onSubmit={submitForm}>
+          <h2 className="text-center mb-3">Log In</h2>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Email address
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword1" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
+            />
+          </div>
 
-            <div className="d-flex justify-content-around">
-              <button type="submit" className="btn btn-primary">
-                Login
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => navigate("/signup")}
-              >
-                Signup
-              </button>
-            </div>
-          </form>
-          {error && <h3>{error}</h3>}
-        </>
-      ) : (
-        <>
-          <h2>loading</h2>
-        </>
-      )}
-    </div>
+          <div className="d-flex flex-column align-items-center justify-content-between">
+            <button
+              type="submit"
+              className="btn btn-primary my-2"
+              disabled={loading}
+            >
+              Sign in
+            </button>
+          </div>
+        </form>
+        {error && <p>{error}</p>}
+      </div>
+    </>
   );
 };
