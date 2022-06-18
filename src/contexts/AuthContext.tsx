@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { User } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { IOrganisation } from "../models/Organisation";
+import { IOrganisation } from "../models/organisation";
 
 interface ContextProps {
   user?: User;

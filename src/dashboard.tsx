@@ -14,7 +14,7 @@ import { IEvent } from "./models/Event";
 
 export const Dashboard = () => {
   const { user, logOut } = useAuth();
-  const [userData, setUserData] = useState<DocumentData>();
+  const [OrgUserData, setOrgUserData] = useState<DocumentData>();
   const [EventsData, setEventData] = useState<DocumentData>();
   const [eventName, setEventName] = useState<string>("");
   const [EventDescription, setEventDescription] = useState<string>("");
@@ -23,27 +23,26 @@ export const Dashboard = () => {
   const [CreateEvent, setCreateEvent] = useState<boolean>(false);
 
   useEffect(() => {
+    const getData = async () => {
+      if (user) {
+        const orgRef = doc(db, "organisation", user.uid);
+        const orgSnap = await getDoc(orgRef);
+        const orgData = orgSnap.data();
+        setOrgUserData(orgData);
+
+        const eventsRef = collection(db, `events`);
+        const eventsQuerySnap = await getDocs(eventsRef);
+        setEventData(
+          eventsQuerySnap.docs.filter((doc) => {
+            const data = doc.data();
+            return data.OrgId === user.uid;
+          })
+        );
+      }
+    };
+
     getData();
-    // eslint-disable-next-line
-  }, [user, user]);
-
-  const getData = async () => {
-    if (user) {
-      const orgRef = doc(db, "organisation", user.uid);
-      const orgSnap = await getDoc(orgRef);
-      const orgData = orgSnap.data();
-      setUserData(orgData);
-
-      const eventsRef = collection(db, `events`);
-      const eventsQuerySnap = await getDocs(eventsRef);
-      setEventData(
-        eventsQuerySnap.docs.filter((doc) => {
-          const data = doc.data();
-          return data.OrgId === user.uid;
-        })
-      );
-    }
-  };
+  }, [user]);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     // Preventing the page from reloading
@@ -60,7 +59,7 @@ export const Dashboard = () => {
           OrgId: user.uid,
         };
         await addDoc(collection(db, "events"), newEvent);
-        getData();
+        setCreateEvent(!CreateEvent);
       }
     } catch (error) {
       console.error(error);
@@ -91,7 +90,7 @@ export const Dashboard = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <div className="navbar-nav ms-auto d-flex align-items-center mx-4">
-              <h3 className="mx-4">{userData?.orgName}</h3>
+              <h3 className="mx-4">{OrgUserData?.orgName}</h3>
               <button className="btn btn-primary mx-2" onClick={logOut}>
                 LOGOUT
               </button>

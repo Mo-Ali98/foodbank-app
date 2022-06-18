@@ -52,31 +52,33 @@ export const SignUp = () => {
         </div>
         <div></div>
         <form onSubmit={submitForm}>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Organisation Email address
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              required
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
-            />
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label htmlFor="exampleInputEmail1" className="form-label">
+                Organisation Email address
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label htmlFor="exampleInputEmail1" className="form-label">
+                Organisation name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                required
+                onChange={(e) => setOrginisationName(e.target.value)}
+                disabled={loading}
+              />
+            </div>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Organisation name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              required
-              onChange={(e) => setOrginisationName(e.target.value)}
-              disabled={loading}
-            />
-          </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
               Password

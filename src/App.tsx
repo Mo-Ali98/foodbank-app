@@ -4,7 +4,7 @@ import "./App.css";
 import { Login } from "./auth/login";
 import { SignUp } from "./auth/signup";
 import { Dashboard } from "./dashboard";
-import { PrivateRoute } from "./PrivateRouter";
+import { PrivateRoute } from "./privateRouter";
 import { Volunteer } from "./volunteer";
 
 export const App = () => {
