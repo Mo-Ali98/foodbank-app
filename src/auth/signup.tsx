@@ -7,6 +7,7 @@ export const SignUp = () => {
   const { signUp } = useAuth();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [OrginisationName, setOrginisationName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -15,7 +16,7 @@ export const SignUp = () => {
 
     try {
       setLoading(true);
-      await signUp(email, password);
+      await signUp(email, password, OrginisationName);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -25,22 +26,55 @@ export const SignUp = () => {
   };
 
   return (
-    <div
-      className="container d-flex flex-column align-content-center justify-content-center"
-      style={{ maxWidth: "400px" }}
-    >
-      {!loading ? (
-        <form onSubmit={submitForm} className="p-5 border">
-          <h2 className="text-center mb-3">Sign Up</h2>
+    <>
+      <nav className="navbar navbar-light bg-light">
+        <div className="mx-4">
+          <div className="d-flex align-items-center">
+            <img
+              src="https://i.pinimg.com/564x/be/d3/0d/bed30ddfa5d434e827c775ac9a3b0d38.jpg"
+              width="30"
+              height="30"
+              className="d-inline-block align-top mx-2"
+              alt="Logo here"
+            />
+            Volunteria
+          </div>
+        </div>
+      </nav>
+      <div
+        className="container d-flex flex-column align-content-center justify-content-center"
+        style={{ maxWidth: "600px", maxHeight: "80vh" }}
+      >
+        <div className="mb-5">
+          <h1 className="text-center mb-3">
+            Create an account for your organisation
+          </h1>
+        </div>
+        <div></div>
+        <form onSubmit={submitForm}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
-              Email address
+              Organisation Email address
             </label>
             <input
               type="email"
               className="form-control"
               required
               onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Organisation name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              required
+              onChange={(e) => setOrginisationName(e.target.value)}
+              disabled={loading}
             />
           </div>
           <div className="mb-3">
@@ -52,28 +86,30 @@ export const SignUp = () => {
               className="form-control"
               required
               onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
             />
           </div>
 
-          <div className="d-flex justify-content-around">
-            <button type="submit" className="btn btn-primary">
-              SignUp
-            </button>
-            <button className="btn btn-primary" type="submit">
-              logIn
+          <div className="my-5">
+            <div className="form-check">
+              <input className="form-check-input" type="checkbox" />
+              <label className="form-check-label">
+                By continuing, you agree to the Terms of Use, Community
+                Guidelines and Privacy Policy
+              </label>
+            </div>
+          </div>
+          <div className="d-flex align-items-center justify-content-center">
+            <button
+              className="btn btn-primary p-2"
+              type="submit"
+              disabled={loading}
+            >
+              Register
             </button>
           </div>
         </form>
-      ) : (
-        <>
-          <div
-            className="container d-flex flex-column align-content-center justify-content-center"
-            style={{ maxWidth: "400px" }}
-          >
-            <h2>loading</h2>
-          </div>
-        </>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
