@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { User } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { IOrganisation } from "../models/organisation";
 
 interface ContextProps {
   user?: User;
@@ -55,11 +56,15 @@ export const AuthProvider = ({ children }: any) => {
         password
       );
 
-      await setDoc(doc(db, "users", userInfo?.uid || ""), {
-        age: 23,
-        location: "CA",
-        name: userInfo?.email || "",
-      });
+      const newOrg: IOrganisation = {
+        adddressLine: "",
+        emailAddress: userInfo?.email || "",
+        orgName: "Org example",
+        phoneNumeber: "092342",
+        postcode: "SE ...",
+      };
+
+      await setDoc(doc(db, "organisation", userInfo?.uid || ""), newOrg);
     } catch (error) {
       console.error(error);
     }
