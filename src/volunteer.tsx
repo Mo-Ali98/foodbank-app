@@ -7,7 +7,7 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "./firebase/firebase";
-import { IVolunteer } from "./models/organisation";
+import { IVolunteer } from "./models/Volunteer";
 
 export const Volunteer = () => {
   const [VolunteerFirstName, setVolunteerFirstName] = useState<string>("");

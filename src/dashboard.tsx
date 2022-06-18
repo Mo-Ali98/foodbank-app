@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAuth } from "./contexts/AuthContext";
 import { db } from "./firebase/firebase";
-import { IEvent } from "./models/organisation";
+import { IEvent } from "./models/Event";
 
 export const Dashboard = () => {
   const { user, logOut } = useAuth();
@@ -56,7 +56,7 @@ export const Dashboard = () => {
           EventDate: EventDate,
           EventLink: `/volunteer/${user.uid}`,
           OrgId: user.uid,
-          EventID: eventName+EventDate
+          EventID: eventName + EventDate,
         };
         await addDoc(collection(db, "events"), newEvent);
       }
