@@ -6,6 +6,7 @@ import { SignUp } from "./auth/signup";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Dashboard } from "./dashboard";
 import { PrivateRoute } from "./privateRouter";
+import { Volunteer } from "./volunteer";
 
 export const App = () => {
   return (
@@ -24,6 +25,9 @@ export const App = () => {
           <Route path="/login" element={<Login />} />
         </Routes>
       </AuthProvider>
+      <Routes>
+      <Route path="/volunteer/*" element={<Volunteer />} />
+      </Routes>
     </BrowserRouter>
   );
 };

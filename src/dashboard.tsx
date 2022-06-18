@@ -56,6 +56,7 @@ export const Dashboard = () => {
           EventDate: EventDate,
           EventLink: `/volunteer/${user.uid}`,
           OrgId: user.uid,
+          EventID: eventName+EventDate
         };
         await addDoc(collection(db, "events"), newEvent);
       }
@@ -153,3 +154,4 @@ export const Dashboard = () => {
     </>
   );
 };
+// http://localhost:3000/volunteer/cZEoOEvIAMVjFMYunfRL0KsDKQU2
