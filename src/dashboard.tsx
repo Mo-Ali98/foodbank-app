@@ -11,7 +11,7 @@ export const Dashboard = () => {
   useEffect(() => {
     const getData = async () => {
       if (user) {
-        const docRef = doc(db, "users", user.uid);
+        const docRef = doc(db, "organisation", user.uid);
         const docSnap = await getDoc(docRef);
         const data = docSnap.data();
         setUserData(data);
@@ -38,9 +38,9 @@ export const Dashboard = () => {
         <img src={user?.photoURL ?? ""} alt="" />
 
         <h1>User info from users collection</h1>
-        <h3>{userData?.id}</h3>
-        <h3>{userData?.name}</h3>
-        <h3>{userData?.location}</h3>
+        <h3>{userData?.orgName}</h3>
+        <h3>{userData?.phoneNumeber}</h3>
+        <h3>{userData?.postcode}</h3>
         <h3>{userData?.age}</h3>
       </div>
     </div>
