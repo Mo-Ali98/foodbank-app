@@ -63,7 +63,6 @@ export const Dashboard = () => {
     } catch (error) {
       console.error(error);
     }
-    console.log(eventName, EventDescription, EventLocation, EventDate);
   };
 
   const renderEvents = EventsData?.map((doc: DocumentData, index: any) => {
@@ -154,4 +153,3 @@ export const Dashboard = () => {
     </>
   );
 };
-// http://localhost:3000/volunteer/cZEoOEvIAMVjFMYunfRL0KsDKQU2

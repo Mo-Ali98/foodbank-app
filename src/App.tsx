@@ -5,27 +5,25 @@ import { Login } from "./auth/login";
 import { SignUp } from "./auth/signup";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Dashboard } from "./dashboard";
-import { PrivateRoute } from "./privateRouter";
+import { PrivateRoute } from "./PrivateRouter";
 import { Volunteer } from "./volunteer";
 
 export const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/volunteer/*" element={<Volunteer />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/volunteer/*" element={<Volunteer />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
