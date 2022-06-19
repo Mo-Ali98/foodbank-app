@@ -39,3 +39,9 @@
     padding: 10px 0px;
   }
 }
+
+.center {
+  margin: auto;
+  width: 70%;
+  padding: 10px;
+}

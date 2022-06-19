@@ -202,39 +202,96 @@ export const Dashboard = () => {
 
           <div>
             {CreateEvent && (
-              <div className="">
-                <form onSubmit={submitForm}>
-                  <input
-                    type="text"
-                    placeholder="Event Name"
-                    required
-                    className="form-control my-2"
-                    onChange={(e) => setEventName(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Event description"
-                    required
-                    className="form-control my-2"
-                    onChange={(e) => setEventDescription(e.target.value)}
-                  />
-                  <textarea
-                    placeholder="Event Location"
-                    rows={5}
-                    cols={1}
-                    className="form-control my-2"
-                    onChange={(e) => setEventLocation(e.target.value)}
-                  />
-                  <input
-                    type="date"
-                    className="form-control my-2"
-                    onChange={(e) => setEventDate(e.target.value)}
-                  />
-                  <button className="button-3" type="submit">
-                    Create
-                  </button>
-                </form>
-              </div>
+             <div>
+
+             <div className="maincontainer">
+               <div className="container">
+                 <div className="py-5 text-center">
+                   
+                   <h2>Create Your Event</h2>
+                   <p className="lead">Tell your volunteers a little about your event and how they can help your good cause</p>
+                 </div>
+                 <div className="row">
+                   
+                   <div className="center" style={{ alignItems: 'center', }}>
+                     <h4 className="mb-3">Event Details</h4>
+                     <form className="needs-validation">
+                       <div className="row">
+                         
+                       </div>
+                       <div className="mb-3">
+                         <label>Event Name</label>
+       
+                           <input 
+                             type="text" 
+                             className="form-control" 
+                             id="username" 
+                             placeholder="" 
+                             required 
+                             onChange={(e) => setEventName(e.target.value)}
+                             />
+       
+                           <div className="invalid-feedback">
+                             Your username is required.
+                           </div>
+                       </div>
+       
+                       <div className="mb-3">
+                         <label >Event Bio </label>
+                         
+                         <textarea 
+                         className="form-control" 
+                         id="bio" 
+                         placeholder="" 
+                         onChange={(e) => setEventDescription(e.target.value)}
+                         />
+       
+                       </div>
+       
+                       <div className="mb-3">
+                         <label >Event Location</label>
+       
+                         <input 
+                         type="text" 
+                         className="form-control" 
+                         id="address" 
+                         placeholder="1234 Main St" 
+                         required 
+                         onChange={(e) => setEventLocation(e.target.value)}
+                         />
+                       </div>
+       
+                       <div className="mb-3">
+                         <label>Event Date</label>
+       
+                         <input 
+                         type="date" 
+                         className="form-control" 
+                         id="date" 
+                         placeholder="12/12/2022" 
+                         onChange={(e) => setEventDate(e.target.value)}
+                         />
+       
+                       </div>
+                      
+                       <hr className="mb-4" />
+                       <button className="btn btn-primary btn-lg btn-block" type="button">Create Your Event</button>
+                     </form>
+                   </div>
+                 </div>
+                 <footer className="my-5 pt-5 text-muted text-center text-small">
+                   <p className="mb-1">&copy; 2022 Volunteria.com</p>
+                   <ul className="list-inline">
+                     <li className="list-inline-item"><a href="#">Privacy</a></li>
+                     <li className="list-inline-item"><a href="#">Terms</a></li>
+                     <li className="list-inline-item"><a href="#">Support</a></li>
+                   </ul>
+                 </footer>
+               </div>
+            
+             </div>
+       
+                       </div>
             )}
           </div>
         </div>
