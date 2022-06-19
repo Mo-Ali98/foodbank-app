@@ -5,7 +5,7 @@ import { Login } from "./auth/login";
 import { SignUp } from "./auth/signup";
 import { Dashboard } from "./dashboard";
 import { PrivateRoute } from "./privateRouter";
-import { Volunteer } from "./volunteer";
+import { Volunteer } from "./pages/Volunteer";
 
 export const App = () => {
   return (

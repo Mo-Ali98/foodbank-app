@@ -68,18 +68,3 @@ export const AuthLayoutPage: React.FC<Props> = ({ children, login }) => {
     </div>
   );
 };
-
-<nav className="navbar navbar-light bg-light">
-  <div className="mx-4">
-    <div className="d-flex align-items-center">
-      <img
-        src="https://i.pinimg.com/564x/be/d3/0d/bed30ddfa5d434e827c775ac9a3b0d38.jpg"
-        width="30"
-        height="30"
-        className="d-inline-block align-top mx-2"
-        alt="Logo here"
-      />
-      Volunteria
-    </div>
-  </div>
-</nav>;
