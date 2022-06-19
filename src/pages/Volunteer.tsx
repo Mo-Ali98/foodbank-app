@@ -170,16 +170,17 @@ export const Volunteer = () => {
       e.preventDefault();
       try {
         const newVolunteer: IVolunteer = {
-          firstName: VolunteerFirstName,
-          lastName: VolunteerLastName,
-          email: VolunteerEmail,
-          number: VolunteerNumber,
-          eventID: SelectedEvents,
+            firstName: VolunteerFirstName,
+            lastName: VolunteerLastName,
+            email: VolunteerEmail,
+            number: VolunteerNumber,
+            eventID: SelectedEvents,
+            orgID: orgID
         };
   
-        await setDoc(doc(db, "Volunteer", VolunteerFirstName), {
+        await setDoc(doc(db, "Volunteer", VolunteerFirstName), 
           newVolunteer,
-        });
+        );
       } catch (error) {
         console.log(error);
       }
@@ -251,7 +252,7 @@ export const Volunteer = () => {
                         <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" 
                             onChange={(e) => setAnswer(e.target.value)}/>
                         <br/>
-                        Thank you so much for volunteering to...., we really appreciate your support. 
+                        Thank you so much for volunteering,we really appreciate your support. 
                         Food banks rely on your attendance, so please do not sign up if you are not able to attend.
                     </LowerSection>
                     </div>

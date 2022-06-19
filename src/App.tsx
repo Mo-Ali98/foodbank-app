@@ -9,22 +9,20 @@ import { Volunteer } from "./pages/Volunteer";
 
 export const App = () => {
   return (
-    // <BrowserRouter>
-    //   <AuthProvider>
-    //     <Routes>
-    //       <Route
-    //         path="/"
-    //         element={
-    //           <PrivateRoute>
-    //             <Dashboard />
-    //           </PrivateRoute>
-    //         }
-    //       />
-    //       <Route path="/signup" element={<SignUp />} />
-    //       <Route path="/login" element={<Login />} />
-    //     </Routes>
-    //   </AuthProvider>
-    // </BrowserRouter>
-    <Volunteer/>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/volunteer/*" element={<Volunteer />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
