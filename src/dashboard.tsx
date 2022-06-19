@@ -34,7 +34,7 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    //getData();
+    getData();
     // eslint-disable-next-line
   }, [user]);
 
