@@ -61,7 +61,7 @@ export const Dashboard = () => {
       }
     };
 
-    getData();
+    //getData();
   }, [user]);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {

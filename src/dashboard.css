@@ -16,6 +16,7 @@
 .Sidepanel {
   grid-area: Sidepanel;
   padding: 20px 0px;
+  border-right: 1px solid #e3dfff;
 
   display: flex;
   flex-direction: column;
