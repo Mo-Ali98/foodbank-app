@@ -4,4 +4,5 @@ export interface IVolunteer {
   email: string;
   number: String;
   eventID: Array<string>;
+  orgID: String;
 }

@@ -54,8 +54,6 @@ export const Volunteer = () => {
     }
   };
 
-  console.log(SelectedEvents);
-
   // Renders events on page + checkboxes for now
   const renderEvents = EventsData?.map((doc: any) => {
     const data = doc.data();
@@ -80,11 +78,10 @@ export const Volunteer = () => {
         email: VolunteerEmail,
         number: VolunteerNumber,
         eventID: SelectedEvents,
+        orgID: orgID,
       };
 
-      await setDoc(doc(db, "Volunteer", VolunteerFirstName), {
-        newVolunteer,
-      });
+      await setDoc(doc(db, "Volunteer", VolunteerFirstName), newVolunteer);
     } catch (error) {
       console.log(error);
     }

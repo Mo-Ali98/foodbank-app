@@ -19,12 +19,17 @@ export const Dashboard = () => {
   const { user, logOut } = useAuth();
   const [OrgUserData, setOrgUserData] = useState<DocumentData>();
   const [EventsData, setEventData] = useState<DocumentData>();
+  const [VolunteerData, setVolunteerData] = useState<DocumentData>();
+
   const [eventName, setEventName] = useState<string>("");
   const [EventDescription, setEventDescription] = useState<string>("");
   const [EventLocation, setEventLocation] = useState<string>("");
   const [EventDate, setEventDate] = useState<string>("");
   const [CreateEvent, setCreateEvent] = useState<boolean>(false);
   const [ViewEvents, setViewEvents] = useState<boolean>(true);
+
+  const eventsRef = collection(db, `events`);
+  const VolunteersRef = collection(db, `Volunteer`);
 
   useEffect(() => {
     const getData = async () => {
@@ -34,12 +39,19 @@ export const Dashboard = () => {
         const orgData = orgSnap.data();
         setOrgUserData(orgData);
 
-        const eventsRef = collection(db, `events`);
         const eventsQuerySnap = await getDocs(eventsRef);
         setEventData(
           eventsQuerySnap.docs.filter((doc) => {
             const data = doc.data();
             return data.OrgId === user.uid;
+          })
+        );
+
+        const volunteersQuerySnap = await getDocs(VolunteersRef);
+        setVolunteerData(
+          volunteersQuerySnap.docs.filter((doc) => {
+            const data = doc.data();
+            return data.orgID === user.uid;
           })
         );
       }

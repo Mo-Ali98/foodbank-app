@@ -1,5 +1,7 @@
 import React from "react";
 import logo from "../assets/logo-small.png";
+import logoLarge from "../assets/logo-small.png";
+
 import "./auth-layout.css";
 
 interface Props {
@@ -52,7 +54,7 @@ export const AuthLayoutPage: React.FC<Props> = ({ children, login }) => {
         style={{ maxWidth: "600px", maxHeight: "80vh" }}
       >
         <div className="d-flex flex-column align-items-center justify-content-center">
-          <img src={logo} className="logo" alt="Volunteria" />
+          <img src={logoLarge} className="logo" alt="Volunteria" />
         </div>
 
         {children}
