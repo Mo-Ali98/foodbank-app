@@ -23,6 +23,7 @@ export const AuthLayoutPage: React.FC<Props> = ({ children, login }) => {
                   alt="Volunteria"
                   width={"55px"}
                   height={"55px"}
+                  loading={"lazy"}
                 />
               </div>
             </div>
@@ -54,7 +55,12 @@ export const AuthLayoutPage: React.FC<Props> = ({ children, login }) => {
         style={{ maxWidth: "600px", maxHeight: "80vh" }}
       >
         <div className="d-flex flex-column align-items-center justify-content-center">
-          <img src={logoLarge} className="logo" alt="Volunteria" />
+          <img
+            src={logoLarge}
+            className="logo"
+            alt="Volunteria"
+            loading={"lazy"}
+          />
         </div>
 
         {children}
