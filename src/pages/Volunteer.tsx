@@ -80,8 +80,8 @@ const CardTitle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 28px;
-`;
+    font-size: 18px;  
+    `;
 
 const CardBody = styled.div`
     display: flex;
@@ -98,7 +98,7 @@ const Scroll = styled.div`
 const Card = styled.div`
     display: inline-block;
     padding-top:5%;
-    width: 10rem;
+    width: 18rem;
     margin:1%;
 `;
 const CardButton = styled.button<IBtn>`
