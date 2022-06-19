@@ -13,7 +13,7 @@
 
 ## How to run:
 1. Run `npm install` to get requsite packages
-2. Add API keys in [here](src/firebase/firbase.tsx)
+2. Add API keys in [here](src/firebase/firebase.tsx)
 ``` 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
