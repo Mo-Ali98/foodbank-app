@@ -14,8 +14,10 @@ import { IEvent } from "./models/Event";
 import logo from "./assets/logo-small.png";
 import { IVolunteer } from "./models/Volunteer";
 import "./dashboard.css";
+import { useNavigate } from "react-router";
 
 export const Dashboard = () => {
+  const navigate = useNavigate();
   const { user, logOut } = useAuth();
   const [OrgUserData, setOrgUserData] = useState<DocumentData>();
   const [EventsData, setEventData] = useState<DocumentData>();
@@ -32,7 +34,7 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getData();
+    //getData();
     // eslint-disable-next-line
   }, [user]);
 
@@ -240,6 +242,19 @@ export const Dashboard = () => {
         <div className="Main-content">
           {ViewEvents && (
             <div className="d-flex flex-column align-content-center justify-content-center mt-5">
+              <span className="mb-4">
+                Link to volunteer page for events -{" "}
+                <a
+                  className="lead"
+                  onClick={() => {
+                    navigate(`/volunteer/${user?.uid}`);
+                  }}
+                  style={{ color: "#7d57c2", cursor: "pointer" }}
+                >
+                  here
+                </a>
+              </span>
+
               {EventsData?.length !== 0 ? (
                 <div className="card" style={{ width: "100%" }}>
                   <div className="card-header d-flex justify-content-between">
