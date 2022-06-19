@@ -14,6 +14,7 @@ import { IEvent } from "./models/Event";
 import "./dashboard.css";
 
 import logo from "./assets/logo-small.png";
+import { IVolunteer } from "./models/Volunteer";
 
 export const Dashboard = () => {
   const { user, logOut } = useAuth();
@@ -27,6 +28,7 @@ export const Dashboard = () => {
   const [EventDate, setEventDate] = useState<string>("");
   const [CreateEvent, setCreateEvent] = useState<boolean>(false);
   const [ViewEvents, setViewEvents] = useState<boolean>(true);
+  const [ViewVolunteers, setViewVolunteers] = useState<boolean>(false);
 
   const eventsRef = collection(db, `events`);
   const VolunteersRef = collection(db, `Volunteer`);
@@ -95,6 +97,22 @@ export const Dashboard = () => {
     );
   });
 
+  const renderVolunteers = VolunteerData?.map(
+    (doc: DocumentData, index: any) => {
+      const data: IVolunteer = doc.data();
+      return (
+        <li key={doc.id} className="list-group-item">
+          <div className="d-flex align-items-center justify-content-between">
+            <span>
+              Volunteer name: {data.firstName} {data.lastName}
+            </span>
+            <span>Volunteer email: {data.email}</span>
+            <span>Volunteer number: {data.number}</span>
+          </div>
+        </li>
+      );
+    }
+  );
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-white px-4 navbar-additional">
@@ -122,13 +140,23 @@ export const Dashboard = () => {
       <div className="main-container">
         <div className="Sidepanel">
           <div className="my-2">
-            <button className="button-3">View volunteers</button>
+            <button
+              className="button-3"
+              onClick={() => {
+                setCreateEvent(false);
+                setViewEvents(false);
+                setViewVolunteers(true);
+              }}
+            >
+              View volunteers
+            </button>
           </div>
           <div className="my-2">
             <button
               className="button-3"
               onClick={() => {
                 setCreateEvent(false);
+                setViewVolunteers(false);
                 setViewEvents(true);
               }}
             >
@@ -140,8 +168,9 @@ export const Dashboard = () => {
             <button
               className="button-3"
               onClick={() => {
-                setCreateEvent(!CreateEvent);
+                setCreateEvent(true);
                 setViewEvents(false);
+                setViewVolunteers(false);
               }}
             >
               Create event
@@ -154,6 +183,17 @@ export const Dashboard = () => {
               <div className="card" style={{ width: "100%" }}>
                 <div className="card-header">Events Created: </div>
                 <ul className="list-group list-group-flush">{renderEvents}</ul>
+              </div>
+            </div>
+          )}
+
+          {ViewVolunteers && (
+            <div className="d-flex flex-column align-content-center justify-content-center mt-5">
+              <div className="card" style={{ width: "100%" }}>
+                <div className="card-header">Volunteers: </div>
+                <ul className="list-group list-group-flush">
+                  {renderVolunteers}
+                </ul>
               </div>
             </div>
           )}
