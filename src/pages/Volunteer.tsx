@@ -261,7 +261,7 @@ export const Volunteer = () => {
                     </Scroll>
             </CardContainer>   
             <ContactContainer>
-                <ContactTitle>Billing address</ContactTitle>
+                <ContactTitle> Volunteer Contact form</ContactTitle>
                 <form className="needs-validation" onSubmit={submitVolunteerForm}>
                     <div className="row">
                     <div className="col-md-6 mb-3">
