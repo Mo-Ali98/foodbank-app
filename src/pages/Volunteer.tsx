@@ -11,6 +11,8 @@ import React, { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 import { IVolunteer } from "../models/Volunteer";
 import logo from "../assets/logo-small.png";
+import foodBankImage from "../assets/masjid-food-bank.jpg";
+
 import "./volunteer.css";
 
 interface IBtn {
@@ -187,9 +189,10 @@ export const Volunteer = () => {
           </div>
           <div className="d-flex align-items-center">
             <img
-              src="https://cswgroup.co.uk/wp-content/uploads/2019/07/Volunteers_Raised_Hands_MHagerty.png"
-              alt="Paris"
+              src={foodBankImage}
+              alt="FoodBank"
               className="org-image center"
+              loading={"lazy"}
             />
           </div>
         </div>
