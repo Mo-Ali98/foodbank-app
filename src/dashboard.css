@@ -1,6 +1,6 @@
 .main-container {
   display: grid;
-  grid-template-columns: 1fr 8fr;
+  grid-template-columns: 1fr 7fr;
   grid-template-rows: 1fr;
   gap: 10px 0px;
   grid-template-areas: "Sidepanel Main-content";
