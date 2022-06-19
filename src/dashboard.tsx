@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "./contexts/AuthContext";
 import { db } from "./firebase/firebase";
 import { IEvent } from "./models/Event";
+import "./dashboard.css";
 
 export const Dashboard = () => {
   const { user, logOut } = useAuth();
@@ -69,9 +70,13 @@ export const Dashboard = () => {
   const renderEvents = EventsData?.map((doc: DocumentData, index: any) => {
     const data: IEvent = doc.data();
     return (
-      <p key={index}>
-        {data.EventName} - {data.EventDescription} - {data.EventDate}
-      </p>
+      <li key={doc.id} className="list-group-item">
+        <div className="d-flex align-items-center justify-content-between">
+          <span>Event Name: {data.EventName}</span>
+          <span>Event Description: {data.EventDescription}</span>
+          <span>Event Date: {data.EventDate}</span>
+        </div>
+      </li>
     );
   });
 
@@ -79,7 +84,7 @@ export const Dashboard = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
         <div className="container-fluid">
-          Brand Logo
+          Brand Logo here!
           <button
             type="button"
             className="navbar-toggler"
@@ -90,7 +95,7 @@ export const Dashboard = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <div className="navbar-nav ms-auto d-flex align-items-center mx-4">
-              <h3 className="mx-4">{OrgUserData?.orgName}</h3>
+              <span className="mx-4">{OrgUserData?.orgName}</span>
               <button className="btn btn-primary mx-2" onClick={logOut}>
                 LOGOUT
               </button>
@@ -98,53 +103,61 @@ export const Dashboard = () => {
           </div>
         </div>
       </nav>
-      <div className="container d-flex flex-column align-content-center">
-        <div className="d-flex flex-column align-content-center justify-content-center mt-5">
-          {renderEvents}
-        </div>
 
-        <button
-          className="btn btn-primary"
-          onClick={() => setCreateEvent(!CreateEvent)}
-        >
-          Create Event
-        </button>
-
-        {CreateEvent && (
-          <div className="">
-            <form onSubmit={submitForm}>
-              <input
-                type="text"
-                placeholder="Event Name"
-                required
-                className="form-control my-2"
-                onChange={(e) => setEventName(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Event description"
-                required
-                className="form-control my-2"
-                onChange={(e) => setEventDescription(e.target.value)}
-              />
-              <textarea
-                placeholder="Event Location"
-                rows={5}
-                cols={1}
-                className="form-control my-2"
-                onChange={(e) => setEventLocation(e.target.value)}
-              />
-              <input
-                type="date"
-                className="form-control my-2"
-                onChange={(e) => setEventDate(e.target.value)}
-              />
-              <button className="btn btn-primary" type="submit">
-                Create Event
-              </button>
-            </form>
+      <div className="main-container">
+        <div className="Main-content">
+          <div className="d-flex flex-column align-content-center justify-content-center mt-5">
+            <div className="card" style={{ width: "100%" }}>
+              <div className="card-header">Events Created: </div>
+              <ul className="list-group list-group-flush">{renderEvents}</ul>
+            </div>
           </div>
-        )}
+          <div>
+            {CreateEvent && (
+              <div className="">
+                <form onSubmit={submitForm}>
+                  <input
+                    type="text"
+                    placeholder="Event Name"
+                    required
+                    className="form-control my-2"
+                    onChange={(e) => setEventName(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Event description"
+                    required
+                    className="form-control my-2"
+                    onChange={(e) => setEventDescription(e.target.value)}
+                  />
+                  <textarea
+                    placeholder="Event Location"
+                    rows={5}
+                    cols={1}
+                    className="form-control my-2"
+                    onChange={(e) => setEventLocation(e.target.value)}
+                  />
+                  <input
+                    type="date"
+                    className="form-control my-2"
+                    onChange={(e) => setEventDate(e.target.value)}
+                  />
+                  <button className="btn btn-primary" type="submit">
+                    Create Event
+                  </button>
+                </form>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="Sidepanel">
+          <button
+            className="btn btn-primary"
+            onClick={() => setCreateEvent(!CreateEvent)}
+          >
+            New Event
+          </button>
+        </div>
       </div>
     </>
   );

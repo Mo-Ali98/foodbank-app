@@ -1,0 +1,19 @@
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+  grid-template-rows: 1fr;
+  gap: 10px 0px;
+  grid-template-areas: "Sidepanel Main-content";
+
+  height: 90vh;
+}
+.Main-content {
+  grid-area: Main-content;
+  padding: 20px;
+}
+.Sidepanel {
+  grid-area: Sidepanel;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
