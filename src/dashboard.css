@@ -13,7 +13,9 @@
 }
 .Sidepanel {
   grid-area: Sidepanel;
+  padding: 20px 0px;
+
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
