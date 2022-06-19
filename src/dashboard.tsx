@@ -30,17 +30,17 @@ export const Dashboard = () => {
   const [ViewEvents, setViewEvents] = useState<boolean>(true);
   const [ViewVolunteers, setViewVolunteers] = useState<boolean>(false);
 
-  const eventsRef = collection(db, `events`);
-  const VolunteersRef = collection(db, `Volunteer`);
-
   useEffect(() => {
     const getData = async () => {
       if (user) {
+        //Fetch user/ org data
         const orgRef = doc(db, "organisation", user.uid);
         const orgSnap = await getDoc(orgRef);
         const orgData = orgSnap.data();
         setOrgUserData(orgData);
 
+        //fetch events
+        const eventsRef = collection(db, `events`);
         const eventsQuerySnap = await getDocs(eventsRef);
         setEventData(
           eventsQuerySnap.docs.filter((doc) => {
@@ -49,6 +49,8 @@ export const Dashboard = () => {
           })
         );
 
+        //Fetch volunteers
+        const VolunteersRef = collection(db, `Volunteer`);
         const volunteersQuerySnap = await getDocs(VolunteersRef);
         setVolunteerData(
           volunteersQuerySnap.docs.filter((doc) => {
