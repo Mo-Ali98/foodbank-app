@@ -10,6 +10,7 @@ import {
   import React, { useEffect, useState } from "react";
   import { db } from "../firebase/firebase";
   import { IVolunteer } from "../models/Volunteer";
+  import Img from "../assets/FoodBank.jpg"
   
 
 interface IBtn {
@@ -26,8 +27,23 @@ const Container = styled.div`
     // flex-wrap: wrap;
 `;
 
+const HeaderSection = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const Header = styled.div`
+    font-size: 24px;
+`;
+
 const Title = styled.div`
     font-size: 24px;
+`;
+
+const HeaderTitle = styled.div`
+    font-size: 16px;
+    width: 540px; 
+    word-break: break-all;
 `;
 
 const EventText = styled.div`
@@ -199,6 +215,7 @@ export const Volunteer = () => {
         await setDoc(doc(db, "Volunteer", VolunteerFirstName), 
           newVolunteer,
         );
+        alert("Thank you " + VolunteerFirstName + " for signing up, we will be in contact with you shortly");
       } catch (error) {
         console.log(error);
       }
@@ -209,9 +226,17 @@ export const Volunteer = () => {
     return(
         <Container>
             <BannerSection>
-                <Title>{orgData?.orgName}</Title>
+                <HeaderSection>
+                    <Header>{orgData?.orgName}</Header>
+                    <br/>
+                    <HeaderTitle>
+                        Food banks are designed to provide short-term, emergency support with food during a crisis. 
+                        They aim to relieve that immediate pressure by providing food, but also offer additional support 
+                        so that people don’t need to use the food bank again in the future.
+                    </HeaderTitle>
+                </HeaderSection>
                 <Image>
-                    <img src="https://www.w3schools.com/css/img_5terre_wide.jpg" alt="Paris" width= "450px" height= "250px"/>
+                    <img src="https://cswgroup.co.uk/wp-content/uploads/2019/07/Volunteers_Raised_Hands_MHagerty.png" alt="Paris" width= "450px" height= "250px"/>
                 </Image>
             </BannerSection>
             <CardContainer>
@@ -273,19 +298,11 @@ export const Volunteer = () => {
                         Valid mobile number is required.
                         </div>
                     </div>
-                    <DivPadding>
-                        <h6 className="mb-3">Question 1 - This is a Dummy question, enter your answer below</h6>
-                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" 
-                            onChange={(e) => setAnswer(e.target.value)} style={{borderColor:"#7D57C2"}}/>
-                        <br/>
-                        Thank you so much for volunteering,we really appreciate your support. 
-                        Food banks rely on your attendance, so please do not sign up if you are not able to attend.
-                    </DivPadding>
                     </div>
                     <SubmitSection>
-                    <button type="button" className="btn btn-primary">Submit</button>
+                        <button type="submit" className="btn btn-primary">Submit</button>
                         <DivPadding>Powered By Volunteria.</DivPadding>
-                </SubmitSection>
+                    </SubmitSection>
                 </form>
                 </ContactContainer>
         </Container>        
