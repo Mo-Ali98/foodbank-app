@@ -1,0 +1,19 @@
+.auth-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  gap: 10px 0px;
+}
+
+.logo {
+  height: 250px;
+  width: 250px;
+}
+
+@media screen and (max-width: 425px) {
+  .logo {
+    margin-top: 100px;
+    height: 100px;
+    width: 100px;
+  }
+}

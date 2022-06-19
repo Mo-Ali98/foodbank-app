@@ -30,7 +30,6 @@ export const Login = () => {
   return (
     <AuthLayoutPage login={true}>
       <form onSubmit={submitForm}>
-        <h2 className="text-center mb-3">Log In</h2>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email address

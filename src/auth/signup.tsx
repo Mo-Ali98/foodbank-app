@@ -30,12 +30,12 @@ export const SignUp = () => {
 
   return (
     <AuthLayoutPage login={false}>
-      <div className="mb-5">
-        <h1 className="text-center mb-2">
-          Create an account for your organisation
-        </h1>
-      </div>
       <form onSubmit={submitForm}>
+        <div className="mb-5">
+          <h3 className="text-center mb-1">
+            Create an account for your organisation
+          </h3>
+        </div>
         <div className="row">
           <div className="col-md-6 mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
