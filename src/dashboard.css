@@ -7,10 +7,12 @@
 
   height: 90vh;
 }
+
 .Main-content {
   grid-area: Main-content;
   padding: 20px;
 }
+
 .Sidepanel {
   grid-area: Sidepanel;
   padding: 20px 0px;
@@ -18,4 +20,21 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
+}
+
+@media screen and (max-width: 425px) {
+  .main-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Main-content {
+    grid-area: Main-content;
+    padding: 10px;
+  }
+
+  .Sidepanel {
+    grid-area: Sidepanel;
+    padding: 10px 0px;
+  }
 }

@@ -105,6 +105,14 @@ export const Dashboard = () => {
       </nav>
 
       <div className="main-container">
+        <div className="Sidepanel">
+          <button
+            className="btn btn-primary"
+            onClick={() => setCreateEvent(!CreateEvent)}
+          >
+            New Event
+          </button>
+        </div>
         <div className="Main-content">
           <div className="d-flex flex-column align-content-center justify-content-center mt-5">
             <div className="card" style={{ width: "100%" }}>
@@ -149,14 +157,6 @@ export const Dashboard = () => {
               </div>
             )}
           </div>
-        </div>
-        <div className="Sidepanel">
-          <button
-            className="btn btn-primary"
-            onClick={() => setCreateEvent(!CreateEvent)}
-          >
-            New Event
-          </button>
         </div>
       </div>
     </>
