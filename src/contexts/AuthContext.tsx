@@ -78,7 +78,6 @@ export const AuthProvider = ({ children }: any) => {
     return auth.signInWithEmailAndPassword(email, password);
   };
 
-  console.log({ user });
   return (
     <AuthContext.Provider
       value={{
