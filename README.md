@@ -2,18 +2,18 @@
 
 
 ## Description
- Volunteeria is a platform that matches volunteers and food banks. Food banks can create ` events` where volunteers can register for. 
+ Volunteria is a platform that matches volunteers and organisations such as food banks.
  
 ## Tech stack
-
 - Typescript 
 - React
 - Firebase
+- npm
 
 
 ## How to run:
 1. Run `npm install` to get requsite packages
-2. Add API keys in [here](src/firebase/firebase.tsx)
+2. Setup a firebase project and add  your config API keys in [here](src/firebase/firebase.tsx)
 ``` 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
