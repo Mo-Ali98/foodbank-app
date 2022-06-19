@@ -87,6 +87,13 @@ export const SignUp = () => {
         </div>
         <div className="d-flex align-items-center justify-content-center">
           <button className="button-3 my-2" type="submit" disabled={loading}>
+            {loading && (
+              <span
+                className="spinner-border spinner-border-sm mx-2"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
             Register
           </button>
         </div>

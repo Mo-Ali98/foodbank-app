@@ -33,7 +33,14 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const getData = async () => {
+    getData();
+    // eslint-disable-next-line
+  }, [user]);
+
+  const getData = async () => {
+    try {
+      setLoading(true);
+
       if (user) {
         //Fetch user/ org data
         const orgRef = doc(db, "organisation", user.uid);
@@ -61,11 +68,12 @@ export const Dashboard = () => {
           })
         );
       }
-    };
-
-    //getData();
-  }, [user]);
-
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     // Preventing the page from reloading
     e.preventDefault();
@@ -82,27 +90,26 @@ export const Dashboard = () => {
           OrgId: user.uid,
         };
         await addDoc(collection(db, "events"), newEvent);
-        setCreateEvent(false);
-        setViewVolunteers(false);
-        setViewEvents(true);
       }
     } catch (error) {
       console.error(error);
     } finally {
+      getData();
+      setCreateEvent(false);
+      setViewVolunteers(false);
+      setViewEvents(true);
       setLoading(false);
     }
   };
-
-  console.log(EventsData?.length, VolunteerData?.length);
 
   const renderEvents = EventsData?.map((doc: DocumentData, index: any) => {
     const data: IEvent = doc.data();
     return (
       <li key={doc.id} className="list-group-item">
         <div className="d-flex align-items-center justify-content-between">
-          <span>Event Name: {data.EventName}</span>
-          <span>Event Description: {data.EventDescription}</span>
-          <span>Event Date: {data.EventDate}</span>
+          <span>Name: {data.EventName}</span>
+          <span>Description: {data.EventDescription}</span>
+          <span>Date: {data.EventDate}</span>
         </div>
       </li>
     );
@@ -115,10 +122,10 @@ export const Dashboard = () => {
         <li key={doc.id} className="list-group-item">
           <div className="d-flex align-items-center justify-content-between">
             <span>
-              Volunteer name: {data.firstName} {data.lastName}
+              Name: {data.firstName} {data.lastName}
             </span>
-            <span>Volunteer email: {data.email}</span>
-            <span>Volunteer number: {data.number}</span>
+            <span>Email: {data.email}</span>
+            <span>Number: {data.number}</span>
           </div>
         </li>
       );
@@ -139,7 +146,16 @@ export const Dashboard = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <div className="navbar-nav ms-auto d-flex align-items-center mx-4">
-              <span className="mx-4">{OrgUserData?.orgName}</span>
+              {loading ? (
+                <span
+                  className="spinner-border spinner-border-sm mx-2"
+                  role="status"
+                  aria-hidden="true"
+                  style={{ color: "#7d57c2" }}
+                />
+              ) : (
+                <span className="mx-4">{OrgUserData?.orgName}</span>
+              )}
               <button
                 className="button-3 mx-2"
                 onClick={logOut}
@@ -165,6 +181,14 @@ export const Dashboard = () => {
               }}
               disabled={loading}
             >
+              {loading && (
+                <span
+                  className="spinner-border spinner-border-sm mx-2"
+                  role="status"
+                  aria-hidden="true"
+                  style={{ color: "#7d57c2" }}
+                />
+              )}
               View volunteers
             </button>
           </div>
@@ -178,6 +202,14 @@ export const Dashboard = () => {
               }}
               disabled={loading}
             >
+              {loading && (
+                <span
+                  className="spinner-border spinner-border-sm mx-2"
+                  role="status"
+                  aria-hidden="true"
+                  style={{ color: "#7d57c2" }}
+                />
+              )}
               View events
             </button>
           </div>
@@ -193,6 +225,14 @@ export const Dashboard = () => {
               }}
               disabled={loading}
             >
+              {loading && (
+                <span
+                  className="spinner-border spinner-border-sm mx-2"
+                  role="status"
+                  aria-hidden="true"
+                  style={{ color: "#7d57c2" }}
+                />
+              )}
               Create event
             </button>
           </div>
@@ -200,47 +240,41 @@ export const Dashboard = () => {
         <div className="Main-content">
           {ViewEvents && (
             <div className="d-flex flex-column align-content-center justify-content-center mt-5">
-              <div className="card" style={{ width: "100%" }}>
-                <div className="card-header">Events Created: </div>
-                <ul className="list-group list-group-flush">{renderEvents}</ul>
-              </div>
+              {EventsData?.length !== 0 ? (
+                <div className="card" style={{ width: "100%" }}>
+                  <div className="card-header d-flex justify-content-between">
+                    <div>Events Created: </div>
+                    <div>Number of events: {EventsData?.length}</div>
+                  </div>
+                  <ul className="list-group list-group-flush">
+                    {renderEvents}
+                  </ul>
+                </div>
+              ) : (
+                <div className="d-flex align-items-center justify-content-center">
+                  <p className="lead">No events created yet</p>
+                </div>
+              )}
             </div>
           )}
 
           {ViewVolunteers && (
             <div className="d-flex flex-column align-content-center justify-content-center mt-5">
-              <div className="d-flex flex-row">
-                <div
-                  className="card text-bg-white mb-3 mx-2"
-                  style={{ maxWidth: "160px" }}
-                >
-                  <div className="card-header">No. of volunteers</div>
-                  <div className="card-body">
-                    <p className="card-text text-center">
-                      {VolunteerData?.length}
-                    </p>
+              {VolunteerData?.length !== 0 ? (
+                <div className="card" style={{ width: "100%" }}>
+                  <div className="card-header d-flex justify-content-between">
+                    <div>Volunteers: </div>
+                    <div>Number of volunteers: {VolunteerData?.length}</div>
                   </div>
+                  <ul className="list-group list-group-flush">
+                    {renderVolunteers}
+                  </ul>
                 </div>
-
-                <div
-                  className="card text-bg-white mb-3 mx-2"
-                  style={{ maxWidth: "160px" }}
-                >
-                  <div className="card-header">No. of volunteers</div>
-                  <div className="card-body">
-                    <p className="card-text text-center">
-                      {VolunteerData?.length}
-                    </p>
-                  </div>
+              ) : (
+                <div className="d-flex align-items-center justify-content-center">
+                  <p className="lead">No volunteers yet</p>
                 </div>
-              </div>
-
-              <div className="card" style={{ width: "100%" }}>
-                <div className="card-header">Volunteers: </div>
-                <ul className="list-group list-group-flush">
-                  {renderVolunteers}
-                </ul>
-              </div>
+              )}
             </div>
           )}
 
