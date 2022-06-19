@@ -11,10 +11,9 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "./contexts/AuthContext";
 import { db } from "./firebase/firebase";
 import { IEvent } from "./models/Event";
-import "./dashboard.css";
-
 import logo from "./assets/logo-small.png";
 import { IVolunteer } from "./models/Volunteer";
+import "./dashboard.css";
 
 export const Dashboard = () => {
   const { user, logOut } = useAuth();
@@ -69,12 +68,12 @@ export const Dashboard = () => {
         );
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
-  
+
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     // Preventing the page from reloading
     e.preventDefault();
@@ -104,7 +103,6 @@ export const Dashboard = () => {
   };
 
   const renderEvents = EventsData?.map((doc: DocumentData, index: any) => {
-    console.log("rendering events",EventsData);
     const data: IEvent = doc.data();
     return (
       <li key={doc.id} className="list-group-item">
@@ -301,6 +299,7 @@ export const Dashboard = () => {
                           className="form-control"
                           required
                           onChange={(e) => setEventName(e.target.value)}
+                          disabled={loading}
                         />
                       </div>
 
@@ -312,6 +311,7 @@ export const Dashboard = () => {
                           id="bio"
                           required
                           onChange={(e) => setEventDescription(e.target.value)}
+                          disabled={loading}
                         />
                       </div>
 
@@ -321,10 +321,10 @@ export const Dashboard = () => {
                         <input
                           type="text"
                           className="form-control"
-                          id="address"
                           placeholder="1234 Main St"
                           required
                           onChange={(e) => setEventLocation(e.target.value)}
+                          disabled={loading}
                         />
                       </div>
 
@@ -337,10 +337,22 @@ export const Dashboard = () => {
                           id="date"
                           required
                           onChange={(e) => setEventDate(e.target.value)}
+                          disabled={loading}
                         />
                       </div>
 
-                      <button className="button-3" type="submit">
+                      <button
+                        className="button-3"
+                        type="submit"
+                        disabled={loading}
+                      >
+                        {loading && (
+                          <span
+                            className="spinner-border spinner-border-sm mx-2"
+                            role="status"
+                            aria-hidden="true"
+                          />
+                        )}
                         Create
                       </button>
                     </form>

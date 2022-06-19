@@ -20,7 +20,7 @@ export const Login = () => {
       await logIn(email, password);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       seterror("Login failed");
     } finally {
       setLoading(false);

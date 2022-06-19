@@ -21,7 +21,7 @@ export const SignUp = () => {
       await signUp(email, password, OrginisationName);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       seterror("Sign up failed - Password must be at least 8 characters long");
     } finally {
       setLoading(false);
