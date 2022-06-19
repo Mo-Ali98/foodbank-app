@@ -26,9 +26,11 @@ export const Dashboard = () => {
   const [EventDescription, setEventDescription] = useState<string>("");
   const [EventLocation, setEventLocation] = useState<string>("");
   const [EventDate, setEventDate] = useState<string>("");
+
   const [CreateEvent, setCreateEvent] = useState<boolean>(false);
   const [ViewEvents, setViewEvents] = useState<boolean>(true);
   const [ViewVolunteers, setViewVolunteers] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -69,6 +71,7 @@ export const Dashboard = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       if (user) {
         const newEvent: IEvent = {
           EventName: eventName,
@@ -79,12 +82,18 @@ export const Dashboard = () => {
           OrgId: user.uid,
         };
         await addDoc(collection(db, "events"), newEvent);
-        setCreateEvent(!CreateEvent);
+        setCreateEvent(false);
+        setViewVolunteers(false);
+        setViewEvents(true);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  console.log(EventsData?.length, VolunteerData?.length);
 
   const renderEvents = EventsData?.map((doc: DocumentData, index: any) => {
     const data: IEvent = doc.data();
@@ -131,7 +140,11 @@ export const Dashboard = () => {
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <div className="navbar-nav ms-auto d-flex align-items-center mx-4">
               <span className="mx-4">{OrgUserData?.orgName}</span>
-              <button className="button-3 mx-2" onClick={logOut}>
+              <button
+                className="button-3 mx-2"
+                onClick={logOut}
+                disabled={loading}
+              >
                 LOGOUT
               </button>
             </div>
@@ -144,11 +157,13 @@ export const Dashboard = () => {
           <div className="my-2">
             <button
               className="button-3"
+              style={{ width: "100%" }}
               onClick={() => {
                 setCreateEvent(false);
                 setViewEvents(false);
                 setViewVolunteers(true);
               }}
+              disabled={loading}
             >
               View volunteers
             </button>
@@ -161,6 +176,7 @@ export const Dashboard = () => {
                 setViewVolunteers(false);
                 setViewEvents(true);
               }}
+              disabled={loading}
             >
               View events
             </button>
@@ -169,11 +185,13 @@ export const Dashboard = () => {
           <div className="my-2">
             <button
               className="button-3"
+              style={{ width: "100%" }}
               onClick={() => {
                 setCreateEvent(true);
                 setViewEvents(false);
                 setViewVolunteers(false);
               }}
+              disabled={loading}
             >
               Create event
             </button>
@@ -191,6 +209,32 @@ export const Dashboard = () => {
 
           {ViewVolunteers && (
             <div className="d-flex flex-column align-content-center justify-content-center mt-5">
+              <div className="d-flex flex-row">
+                <div
+                  className="card text-bg-white mb-3 mx-2"
+                  style={{ maxWidth: "160px" }}
+                >
+                  <div className="card-header">No. of volunteers</div>
+                  <div className="card-body">
+                    <p className="card-text text-center">
+                      {VolunteerData?.length}
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  className="card text-bg-white mb-3 mx-2"
+                  style={{ maxWidth: "160px" }}
+                >
+                  <div className="card-header">No. of volunteers</div>
+                  <div className="card-body">
+                    <p className="card-text text-center">
+                      {VolunteerData?.length}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="card" style={{ width: "100%" }}>
                 <div className="card-header">Volunteers: </div>
                 <ul className="list-group list-group-flush">
