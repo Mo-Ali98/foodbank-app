@@ -1,7 +1,4 @@
-import React from "react";
-// import { ContactForm } from "../components/ContactForm";
-import { DateSelection } from "../components/DateSelection";
-
+import React, {useState} from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -87,14 +84,34 @@ const CardBody = styled.div`
 
 
 export const Volunteer = () => {
+    const [firstName, setFirstName] = useState<string>("");
+    const [lastName, setLastName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [mobile, setMobile] = useState<string>("");
+    const [answer, setAnswer] = useState<string>("");
+    const [dateSelected, setDateSelected] = useState<string[]>([]);
 
-    const dates: string[]= ["21-06-2021","23-06-2022","24-06-2022","27-06-2022","28-06-2022"]
+
+    
+    const dates: string[]= ["21-06-2021","23-06-2022","24-06-2022","27-06-2022","28-06-2022"];
 
     const getMonth = (val:string) :string => {
         const months: string[]= ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
         let date :string = months[val];
         return date;
     }
+
+    const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+    
+        try {
+          console.log("email",email)
+        } catch (error) {
+          console.log(error);
+         
+        }
+      };
 
     return(
         <Container>
@@ -124,26 +141,31 @@ export const Volunteer = () => {
                                 <CardTitle>{item.split("-")[0]}</CardTitle>
                                 <CardBody>{getMonth(item.split("-")[1].split("0")[1])}</CardBody>
                                 <CardBody>{item.split("-")[2]}</CardBody>
-                                <CardBody><button type="button" className="btn btn-outline-primary btn-sm">Select</button></CardBody>
+                                <CardBody><button type="button" className="btn btn-outline-primary btn-sm" 
+                                onClick={(e => {
+                                    setDateSelected((prev) => [...prev,item]);
+                                    console.log(dateSelected);
+                                })}>Select</button></CardBody>
                             </div>
                         </div>
                 ))}
             </CardContainer>   
             <ContactContainer>
                 <ContactTitle>Billing address</ContactTitle>
-                {/* <form className="needs-validation" novalidate> */}
-                <form className="needs-validation">
+                <form className="needs-validation" onSubmit={submitForm}>
                     <div className="row">
                     <div className="col-md-6 mb-3">
                         <label htmlFor="firstName">First name</label>
-                        <input type="text" className="form-control" id="firstName" placeholder=""  required/>
+                        <input type="text" className="form-control" id="firstName" placeholder="" required 
+                            onChange={(e) => setFirstName(e.target.value)}/>
                         <div className="invalid-feedback">
                         Valid first name is required.
                         </div>
                     </div>
                     <div className="col-md-6 mb-3">
                         <label htmlFor="lastName">Last name</label>
-                        <input type="text" className="form-control" id="lastName" placeholder=""  required/>
+                        <input type="text" className="form-control" id="lastName" placeholder="" required
+                            onChange={(e) => setLastName(e.target.value)}/>
                         <div className="invalid-feedback">
                         Valid last name is required.
                         </div>
@@ -152,31 +174,34 @@ export const Volunteer = () => {
                     <div className="row">
                     <div className="col-md-6 mb-3">
                         <label htmlFor="Email Address">Email Address</label>
-                        <input type="text" className="form-control" id="email" placeholder="" required/>
+                        <input type="text" className="form-control" id="email" placeholder=""  required
+                            onChange={(e) => setEmail(e.target.value)}/>
                         <div className="invalid-feedback">
                         Valid emaill address is required.
                         </div>
                     </div>
                     <div className="col-md-6 mb-3">
                         <label htmlFor="Mobile Number">Mobile Number</label>
-                        <input type="text" className="form-control" id="mobileNumber" placeholder=""  required/>
+                        <input type="text" className="form-control" id="mobileNumber" placeholder=""  required
+                            onChange={(e) => setMobile(e.target.value)}/>
                         <div className="invalid-feedback">
                         Valid mobile number is required.
                         </div>
                     </div>
                     <LowerSection>
                         <h6 className="mb-3">Question 1 - This is a Dummy question, enter your answer below</h6>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" 
+                            onChange={(e) => setAnswer(e.target.value)}/>
                         <br/>
                         Thank you so much for volunteering to...., we really appreciate your support. 
                         Food banks rely on your attendance, so please do not sign up if you are not able to attend.
                     </LowerSection>
                     </div>
-                </form>
-                <SubmitButton>
-                    <button type="button" className="btn btn-primary">Submit</button>
-                    <SubmitText>Powered By Volunteria.</SubmitText>
+                    <SubmitButton>
+                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <SubmitText>Powered By Volunteria.</SubmitText>
                 </SubmitButton>
+                </form>
                 </ContactContainer>
         </Container>        
     );
