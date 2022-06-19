@@ -86,16 +86,12 @@ export const SignUp = () => {
           </div>
         </div>
         <div className="d-flex align-items-center justify-content-center">
-          <button
-            className="btn btn-primary p-2"
-            type="submit"
-            disabled={loading}
-          >
+          <button className="button-3 my-2" type="submit" disabled={loading}>
             Register
           </button>
         </div>
       </form>
-      {error && <p className="my-3 text-danger">{error}</p>}
+      {error && <span className="my-3 text-danger">{error}</span>}
     </AuthLayoutPage>
   );
 };

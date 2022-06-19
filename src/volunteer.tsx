@@ -120,7 +120,9 @@ export const Volunteer = () => {
           className="form-control my-2"
           onChange={(e) => setVolunteerNumber(e.target.value)}
         />
-        <button type="submit">SignUp</button>
+        <button className="button-3" type="submit">
+          SignUp
+        </button>
       </form>
     </div>
   );

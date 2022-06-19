@@ -9,7 +9,7 @@ interface Props {
 export const AuthLayoutPage: React.FC<Props> = ({ children, login }) => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light px-2">
+      <nav className="navbar navbar-expand-lg navbar-light bg-white px-2">
         <div className="container-fluid">
           <div className="mx-2">
             <div className="d-flex align-items-center">
@@ -27,7 +27,7 @@ export const AuthLayoutPage: React.FC<Props> = ({ children, login }) => {
               <a
                 className="mx-2"
                 href="/signup"
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: "none", color: "#7d57c2" }}
               >
                 Sign up
               </a>
@@ -35,7 +35,7 @@ export const AuthLayoutPage: React.FC<Props> = ({ children, login }) => {
               <a
                 className="mx-2"
                 href="/login"
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: "none", color: "#7d57c2" }}
               >
                 Login
               </a>

@@ -57,11 +57,7 @@ export const Login = () => {
         </div>
 
         <div className="d-flex flex-column align-items-center justify-content-between">
-          <button
-            type="submit"
-            className="btn btn-primary my-2"
-            disabled={loading}
-          >
+          <button type="submit" className="button-3 my-2" disabled={loading}>
             Sign in
           </button>
         </div>

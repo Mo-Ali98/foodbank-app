@@ -85,9 +85,9 @@ export const Dashboard = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
+      <nav className="navbar navbar-expand-lg navbar-light bg-white px-4">
         <div className="container-fluid">
-          <img src={logo} alt="" width={"50px"} height={"50px"} />
+          <img src={logo} alt="Volunteria" width={"55px"} height={"55px"} />
           <button
             type="button"
             className="navbar-toggler"
@@ -99,7 +99,7 @@ export const Dashboard = () => {
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <div className="navbar-nav ms-auto d-flex align-items-center mx-4">
               <span className="mx-4">{OrgUserData?.orgName}</span>
-              <button className="btn btn-primary mx-2" onClick={logOut}>
+              <button className="button-3 mx-2" onClick={logOut}>
                 LOGOUT
               </button>
             </div>
@@ -110,8 +110,11 @@ export const Dashboard = () => {
       <div className="main-container">
         <div className="Sidepanel">
           <div className="my-2">
+            <button className="button-3">View volunteers</button>
+          </div>
+          <div className="my-2">
             <button
-              className="btn btn-primary"
+              className="button-3"
               onClick={() => {
                 setCreateEvent(false);
                 setViewEvents(true);
@@ -123,7 +126,7 @@ export const Dashboard = () => {
 
           <div className="my-2">
             <button
-              className="btn btn-primary"
+              className="button-3"
               onClick={() => {
                 setCreateEvent(!CreateEvent);
                 setViewEvents(false);
@@ -131,10 +134,6 @@ export const Dashboard = () => {
             >
               Create event
             </button>
-          </div>
-
-          <div className="my-2">
-            <button className="btn btn-primary">View volunteers</button>
           </div>
         </div>
         <div className="Main-content">
@@ -177,8 +176,8 @@ export const Dashboard = () => {
                     className="form-control my-2"
                     onChange={(e) => setEventDate(e.target.value)}
                   />
-                  <button className="btn btn-primary" type="submit">
-                    Create Event
+                  <button className="button-3" type="submit">
+                    Create
                   </button>
                 </form>
               </div>
