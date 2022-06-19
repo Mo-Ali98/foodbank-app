@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import { AuthLayoutPage } from "./auth-layout";
 
 export const SignUp = () => {
   const navigate = useNavigate();
   const { signUp } = useAuth();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [OrginisationName, setOrginisationName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, seterror] = useState<string>("");
 
   const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     // Preventing the page from reloading
@@ -15,68 +18,80 @@ export const SignUp = () => {
 
     try {
       setLoading(true);
-      await signUp(email, password);
+      await signUp(email, password, OrginisationName);
       navigate("/");
     } catch (error) {
       console.log(error);
+      seterror("Sign up failed - Password must be at least 8 characters long");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      className="container d-flex flex-column align-content-center justify-content-center"
-      style={{ maxWidth: "400px" }}
-    >
-      {!loading ? (
-        <form onSubmit={submitForm} className="p-5 border">
-          <h2 className="text-center mb-3">Sign Up</h2>
-          <div className="mb-3">
+    <AuthLayoutPage login={false}>
+      <form onSubmit={submitForm}>
+        <div className="mb-5">
+          <h3 className="text-center mb-1">
+            Create an account for your organisation
+          </h3>
+        </div>
+        <div className="row">
+          <div className="col-md-6 mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
-              Email address
+              Organisation Email address
             </label>
             <input
               type="email"
               className="form-control"
               required
               onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
             />
           </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Password
+          <div className="col-md-6 mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Organisation name
             </label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               required
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setOrginisationName(e.target.value)}
+              disabled={loading}
             />
           </div>
+        </div>
 
-          <div className="d-flex justify-content-around">
-            <button type="submit" className="btn btn-primary">
-              SignUp
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => navigate("/login")}
-            >
-              logIn
-            </button>
+        <div className="mb-3">
+          <label htmlFor="exampleInputPassword1" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
+          />
+        </div>
+
+        <div className="my-5">
+          <div className="form-check">
+            <input className="form-check-input" type="checkbox" />
+            <label className="form-check-label">
+              By continuing, you agree to the Terms of Use, Community Guidelines
+              and Privacy Policy
+            </label>
           </div>
-        </form>
-      ) : (
-        <>
-          <div
-            className="container d-flex flex-column align-content-center justify-content-center"
-            style={{ maxWidth: "400px" }}
-          >
-            <h2>loading</h2>
-          </div>
-        </>
-      )}
-    </div>
+        </div>
+        <div className="d-flex align-items-center justify-content-center">
+          <button className="button-3 my-2" type="submit" disabled={loading}>
+            Register
+          </button>
+        </div>
+      </form>
+      {error && <span className="my-3 text-danger">{error}</span>}
+    </AuthLayoutPage>
   );
 };

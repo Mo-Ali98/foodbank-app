@@ -1,0 +1,40 @@
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+  grid-template-rows: 1fr;
+  gap: 10px 0px;
+  grid-template-areas: "Sidepanel Main-content";
+
+  height: 90vh;
+}
+
+.Main-content {
+  grid-area: Main-content;
+  padding: 20px;
+}
+
+.Sidepanel {
+  grid-area: Sidepanel;
+  padding: 20px 0px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (max-width: 425px) {
+  .main-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Main-content {
+    grid-area: Main-content;
+    padding: 10px;
+  }
+
+  .Sidepanel {
+    grid-area: Sidepanel;
+    padding: 10px 0px;
+  }
+}

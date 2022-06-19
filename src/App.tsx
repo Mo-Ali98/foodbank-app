@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Login } from "./auth/login";
 import { SignUp } from "./auth/signup";
-import { AuthProvider } from "./contexts/AuthContext";
 import { Dashboard } from "./dashboard";
 import { PrivateRoute } from "./privateRouter";
 import { Volunteer } from "./pages/Volunteer";

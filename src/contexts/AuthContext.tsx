@@ -1,13 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
 import { User } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { IOrganisation } from "../models/organisation";
 
 interface ContextProps {
   user?: User;
   setUser: (user: User) => void;
   authenticated: boolean;
   loadingAuthState: boolean;
-  signUp: (email: string, password: string) => void;
+  signUp: (email: string, password: string, OrginisationName: string) => void;
   logIn: (email: string, password: string) => void;
   logOut: () => void;
 }
@@ -47,8 +49,29 @@ export const AuthProvider = ({ children }: any) => {
     auth.signOut();
   };
 
-  const signUp = (email: string, password: string) => {
-    return auth.createUserWithEmailAndPassword(email, password);
+  const signUp = async (
+    email: string,
+    password: string,
+    OrginisationName: string
+  ) => {
+    try {
+      const { user: userInfo } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+      if (userInfo) {
+        const newOrg: IOrganisation = {
+          emailAddress: userInfo?.email || "",
+          orgName: OrginisationName,
+        };
+
+        await setDoc(doc(db, "organisation", userInfo?.uid || ""), newOrg);
+        await setDoc(doc(db, "events", userInfo?.uid || ""), {});
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const logIn = (email: string, password: string) => {

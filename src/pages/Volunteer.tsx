@@ -1,5 +1,16 @@
-import React, {useState} from "react";
 import styled from "styled-components";
+import {
+    collection,
+    doc,
+    DocumentData,
+    setDoc,
+    getDocs,
+    getDoc,
+  } from "firebase/firestore";
+  import React, { useEffect, useState } from "react";
+  import { db } from "../firebase/firebase";
+  import { IVolunteer } from "../models/Volunteer";
+  
 
 const Container = styled.div`
     display: flex;
@@ -84,80 +95,127 @@ const CardBody = styled.div`
 
 
 export const Volunteer = () => {
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [mobile, setMobile] = useState<string>("");
-    const [answer, setAnswer] = useState<string>("");
-    const [dateSelected, setDateSelected] = useState<string[]>([]);
-
-
-    
-    const dates: string[]= ["21-06-2021","23-06-2022","24-06-2022","27-06-2022","28-06-2022"];
-
-    const getMonth = (val:string) :string => {
-        const months: string[]= ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-        let date :string = months[val];
-        return date;
-    }
-
-    const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-    
-        try {
-          console.log("email",email)
-        } catch (error) {
-          console.log(error);
-         
-        }
+    const [VolunteerFirstName, setVolunteerFirstName] = useState<string>("");
+    const [VolunteerLastName, setVolunteerLastName] = useState<string>("");
+    const [VolunteerEmail, setVolunteerEmail] = useState<string>("");
+    const [VolunteerNumber, setVolunteerNumber] = useState<string>("");
+    const [EventsData, setEventData] = useState<DocumentData>();
+    const[orgData, setOrgData] = useState<DocumentData>()
+    const [SelectedEvents, setSelectedEvents] = useState<string[]>([]);
+    const[Answer,setAnswer] = useState<string[]>([]);
+  
+    const url = window.location.href.split("/");
+  
+    const orgID = url[4];
+  
+    //Finds all the events for the org given a url of /volunteer/orgID.
+    useEffect(() => {
+      const getData = async () => {
+        const eventsRef = collection(db, `events`);
+        const eventsQuerySnap = await getDocs(eventsRef);
+        console.log(eventsQuerySnap.docs.length);
+        setEventData(
+          eventsQuerySnap.docs.filter((doc) => {
+            const data = doc.data();
+            return data.OrgId === orgID;
+          })
+        );
+        const orgRef = doc(db, "organisation", orgID);
+        const orgSnap = await getDoc(orgRef);
+        const orgData = orgSnap.data();
+        setOrgData(orgData);
+        
       };
+      getData();
+    }, [orgID]);
+  
+    if (!orgID) {
+      return (
+        <>
+          <h1>Event does not exist</h1>
+        </>
+      );
+    }
+  
+    //Handles adding eventIds to list
+    const toggleEventSelection = (eventId: string) => {
+      if (SelectedEvents.includes(eventId)) {
+        console.log(eventId)
+        setSelectedEvents((ids) => [...ids].filter((id) => id !== eventId));
+      } else {
+        console.log(eventId)
 
+        setSelectedEvents((ids) => [...ids, eventId]);
+      }
+    };
+  
+    console.log(SelectedEvents);
+  
+    // Renders events on page + checkboxes for now
+    const renderEvents = EventsData?.map((doc: any) => {
+      const data = doc.data();
+      return (
+        <p key={data.EventName}>
+          <input
+            type="checkbox"
+            id={data.EventName}
+            onChange={() => toggleEventSelection(doc.id)}
+          />
+          {data.EventName} - {data.EventDate}
+        </p>
+      );
+    });
+  
+    const submitVolunteerForm = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+        const newVolunteer: IVolunteer = {
+          firstName: VolunteerFirstName,
+          lastName: VolunteerLastName,
+          email: VolunteerEmail,
+          number: VolunteerNumber,
+          eventID: SelectedEvents,
+        };
+  
+        await setDoc(doc(db, "Volunteer", VolunteerFirstName), {
+          newVolunteer,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+   
+      
     return(
         <Container>
-            <Title>Event Name</Title>
             <BannerSection>
-                <EventText>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic 
-                    typesetting, remaining essentially unchanged. 
-                    <br/>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                    It has survived not only five centuries, but also the leap into electronic 
-                    typesetting, remaining essentially unchanged. 
-                </EventText>
+                <Title>{orgData?.orgName}</Title>
                 <Image>
                     <img src="https://www.w3schools.com/css/img_5terre_wide.jpg" alt="Paris" width= "450px" height= "250px"/>
                 </Image>
             </BannerSection>
             <CardContainer>
-                {dates.map((item: string,key:number) => (
-                        <div className="card" style={{width: "20rem",margin:"1%",flexWrap: "wrap"}} key = {key}>
+                {EventsData?.map((doc: any)=> (
+                        <div className="card" style={{width: "20rem",margin:"1%",flexWrap: "wrap"}} id={doc.data().EventName}>
                             <div className="card-body">
-                                <CardTitle>{item.split("-")[0]}</CardTitle>
-                                <CardBody>{getMonth(item.split("-")[1].split("0")[1])}</CardBody>
-                                <CardBody>{item.split("-")[2]}</CardBody>
+                                <CardTitle>{doc.data().EventDate}</CardTitle>
+                                <CardBody>{doc.data().EventName}</CardBody>
                                 <CardBody><button type="button" className="btn btn-outline-primary btn-sm" 
-                                onClick={(e => {
-                                    setDateSelected((prev) => [...prev,item]);
-                                    console.log(dateSelected);
-                                })}>Select</button></CardBody>
+                                onClick={() => toggleEventSelection(doc.id)}>Select</button></CardBody>
+                            
                             </div>
                         </div>
                 ))}
             </CardContainer>   
             <ContactContainer>
                 <ContactTitle>Billing address</ContactTitle>
-                <form className="needs-validation" onSubmit={submitForm}>
+                <form className="needs-validation" onSubmit={submitVolunteerForm}>
                     <div className="row">
                     <div className="col-md-6 mb-3">
                         <label htmlFor="firstName">First name</label>
                         <input type="text" className="form-control" id="firstName" placeholder="" required 
-                            onChange={(e) => setFirstName(e.target.value)}/>
+                            onChange={(e) => setVolunteerFirstName(e.target.value)}/>
                         <div className="invalid-feedback">
                         Valid first name is required.
                         </div>
@@ -165,7 +223,7 @@ export const Volunteer = () => {
                     <div className="col-md-6 mb-3">
                         <label htmlFor="lastName">Last name</label>
                         <input type="text" className="form-control" id="lastName" placeholder="" required
-                            onChange={(e) => setLastName(e.target.value)}/>
+                            onChange={(e) => setVolunteerLastName(e.target.value)}/>
                         <div className="invalid-feedback">
                         Valid last name is required.
                         </div>
@@ -175,7 +233,7 @@ export const Volunteer = () => {
                     <div className="col-md-6 mb-3">
                         <label htmlFor="Email Address">Email Address</label>
                         <input type="text" className="form-control" id="email" placeholder=""  required
-                            onChange={(e) => setEmail(e.target.value)}/>
+                            onChange={(e) => setVolunteerEmail(e.target.value)}/>
                         <div className="invalid-feedback">
                         Valid emaill address is required.
                         </div>
@@ -183,7 +241,7 @@ export const Volunteer = () => {
                     <div className="col-md-6 mb-3">
                         <label htmlFor="Mobile Number">Mobile Number</label>
                         <input type="text" className="form-control" id="mobileNumber" placeholder=""  required
-                            onChange={(e) => setMobile(e.target.value)}/>
+                            onChange={(e) => setVolunteerNumber(e.target.value)}/>
                         <div className="invalid-feedback">
                         Valid mobile number is required.
                         </div>

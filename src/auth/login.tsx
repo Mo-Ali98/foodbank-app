@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { AuthLayoutPage } from "./auth-layout";
 
 export const Login = () => {
   const navigate = useNavigate();
   const { logIn } = useAuth();
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, seterror] = useState<string>("");
@@ -28,56 +28,40 @@ export const Login = () => {
   };
 
   return (
-    <div
-      className="container d-flex flex-column align-content-center justify-content-center"
-      style={{ maxWidth: "400px" }}
-    >
-      {!loading ? (
-        <>
-          <form onSubmit={submitForm} className="p-5 border">
-            <h2 className="text-center mb-3">Log In</h2>
-            <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">
-                Email address
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                required
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPassword1" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                required
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+    <AuthLayoutPage login={true}>
+      <form onSubmit={submitForm}>
+        <div className="mb-3">
+          <label htmlFor="exampleInputEmail1" className="form-label">
+            Email address
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            required
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="exampleInputPassword1" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
+          />
+        </div>
 
-            <div className="d-flex justify-content-around">
-              <button type="submit" className="btn btn-primary">
-                Login
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => navigate("/signup")}
-              >
-                Signup
-              </button>
-            </div>
-          </form>
-          {error && <h3>{error}</h3>}
-        </>
-      ) : (
-        <>
-          <h2>loading</h2>
-        </>
-      )}
-    </div>
+        <div className="d-flex flex-column align-items-center justify-content-between">
+          <button type="submit" className="button-3 my-2" disabled={loading}>
+            Sign in
+          </button>
+        </div>
+      </form>
+      {error && <p className="my-3 text-danger">{error}</p>}
+    </AuthLayoutPage>
   );
 };
