@@ -50,3 +50,7 @@ body {
 .button-3:active {
   background-color: #7d57c2;
 }
+
+.navbar-additional {
+  box-shadow: 0px 10px 15px -12px rgba(0, 0, 0, 0.1);
+}

@@ -11,7 +11,7 @@ export const AuthLayoutPage: React.FC<Props> = ({ children, login }) => {
   return (
     <div className="auth-container">
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-white px-2">
+        <nav className="navbar navbar-expand-lg navbar-light bg-white px-2  navbar-additional">
           <div className="container-fluid">
             <div className="mx-2">
               <div className="d-flex align-items-center">

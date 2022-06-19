@@ -85,7 +85,7 @@ export const Dashboard = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-white px-4">
+      <nav className="navbar navbar-expand-lg navbar-light bg-white px-4 navbar-additional">
         <div className="container-fluid">
           <img src={logo} alt="Volunteria" width={"55px"} height={"55px"} />
           <button
