@@ -13,6 +13,8 @@ import { db } from "./firebase/firebase";
 import { IEvent } from "./models/Event";
 import "./dashboard.css";
 
+import logo from "./assets/logo-small.png";
+
 export const Dashboard = () => {
   const { user, logOut } = useAuth();
   const [OrgUserData, setOrgUserData] = useState<DocumentData>();
@@ -85,7 +87,7 @@ export const Dashboard = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
         <div className="container-fluid">
-          Brand Logo here!
+          <img src={logo} alt="" width={"50px"} height={"50px"} />
           <button
             type="button"
             className="navbar-toggler"

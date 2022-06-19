@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../assets/logo-small.png";
 
 interface Props {
   children: React.ReactNode;
@@ -13,13 +14,12 @@ export const AuthLayoutPage: React.FC<Props> = ({ children, login }) => {
           <div className="mx-2">
             <div className="d-flex align-items-center">
               <img
-                src="https://i.pinimg.com/564x/be/d3/0d/bed30ddfa5d434e827c775ac9a3b0d38.jpg"
-                width="30"
-                height="30"
-                className="d-inline-block align-top mx-2"
-                alt="Logo here"
+                className="mx-2"
+                src={logo}
+                alt="Volunteria"
+                width={"55px"}
+                height={"55px"}
               />
-              Volunteria
             </div>
           </div>
           <div className="navbar-nav ms-auto d-flex align-items-center mx-4">
