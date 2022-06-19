@@ -57,6 +57,13 @@ export const Login = () => {
 
         <div className="d-flex flex-column align-items-center justify-content-between">
           <button type="submit" className="button-3 my-2" disabled={loading}>
+            {loading && (
+              <span
+                className="spinner-border spinner-border-sm mx-2"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
             Login
           </button>
         </div>
