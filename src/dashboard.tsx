@@ -22,6 +22,7 @@ export const Dashboard = () => {
   const [EventLocation, setEventLocation] = useState<string>("");
   const [EventDate, setEventDate] = useState<string>("");
   const [CreateEvent, setCreateEvent] = useState<boolean>(false);
+  const [ViewEvents, setViewEvents] = useState<boolean>(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -106,20 +107,44 @@ export const Dashboard = () => {
 
       <div className="main-container">
         <div className="Sidepanel">
-          <button
-            className="btn btn-primary"
-            onClick={() => setCreateEvent(!CreateEvent)}
-          >
-            New Event
-          </button>
+          <div className="my-2">
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setCreateEvent(false);
+                setViewEvents(true);
+              }}
+            >
+              View events
+            </button>
+          </div>
+
+          <div className="my-2">
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setCreateEvent(!CreateEvent);
+                setViewEvents(false);
+              }}
+            >
+              Create event
+            </button>
+          </div>
+
+          <div className="my-2">
+            <button className="btn btn-primary">View volunteers</button>
+          </div>
         </div>
         <div className="Main-content">
-          <div className="d-flex flex-column align-content-center justify-content-center mt-5">
-            <div className="card" style={{ width: "100%" }}>
-              <div className="card-header">Events Created: </div>
-              <ul className="list-group list-group-flush">{renderEvents}</ul>
+          {ViewEvents && (
+            <div className="d-flex flex-column align-content-center justify-content-center mt-5">
+              <div className="card" style={{ width: "100%" }}>
+                <div className="card-header">Events Created: </div>
+                <ul className="list-group list-group-flush">{renderEvents}</ul>
+              </div>
             </div>
-          </div>
+          )}
+
           <div>
             {CreateEvent && (
               <div className="">
