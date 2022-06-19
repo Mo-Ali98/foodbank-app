@@ -170,19 +170,19 @@ export const Volunteer = () => {
     console.log(SelectedEvents);
   
     // Renders events on page + checkboxes for now
-    const renderEvents = EventsData?.map((doc: any) => {
-      const data = doc.data();
-      return (
-        <p key={data.EventName}>
-          <input
-            type="checkbox"
-            id={data.EventName}
-            onChange={() => toggleEventSelection(doc.id)}
-          />
-          {data.EventName} - {data.EventDate}
-        </p>
-      );
-    });
+    // const renderEvents = EventsData?.map((doc: any) => {
+    //   const data = doc.data();
+    //   return (
+    //     <p key={data.EventName}>
+    //       <input
+    //         type="checkbox"
+    //         id={data.EventName}
+    //         onChange={() => toggleEventSelection(doc.id)}
+    //       />
+    //       {data.EventName} - {data.EventDate}
+    //     </p>
+    //   );
+    // });
   
     const submitVolunteerForm = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
