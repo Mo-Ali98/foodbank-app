@@ -78,7 +78,7 @@ export const SignUp = () => {
 
         <div className="my-5">
           <div className="form-check">
-            <input className="form-check-input" type="checkbox" />
+            <input className="form-check-input" type="checkbox" required />
             <label className="form-check-label">
               By continuing, you agree to the Terms of Use, Community Guidelines
               and Privacy Policy
