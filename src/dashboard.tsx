@@ -61,7 +61,7 @@ export const Dashboard = () => {
       }
     };
 
-    //getData();
+    // getData();
   }, [user]);
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -87,6 +87,7 @@ export const Dashboard = () => {
   };
 
   const renderEvents = EventsData?.map((doc: DocumentData, index: any) => {
+    console.log("rendering events",EventsData);
     const data: IEvent = doc.data();
     return (
       <li key={doc.id} className="list-group-item">
