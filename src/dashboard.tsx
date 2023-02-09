@@ -15,6 +15,7 @@ import logo from "./assets/logo-small.png";
 import { IVolunteer } from "./models/Volunteer";
 import "./dashboard.css";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -244,15 +245,17 @@ export const Dashboard = () => {
             <div className="d-flex flex-column align-content-center justify-content-center mt-5">
               <span className="mb-4">
                 Link to volunteer page for events -{" "}
-                <a
+                <Link
                   className="lead"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     navigate(`/volunteer/${user?.uid}`);
                   }}
                   style={{ color: "#7d57c2", cursor: "pointer" }}
+                  to={""}
                 >
                   here
-                </a>
+                </Link>
               </span>
 
               {EventsData?.length !== 0 ? (
