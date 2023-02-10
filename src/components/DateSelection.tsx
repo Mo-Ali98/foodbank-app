@@ -48,7 +48,7 @@ export const DateSelection = () => {
       "Nov",
       "Dec",
     ];
-    let date: string = months[Number(val)];
+    let date = months.find((m) => m === val) ?? "";
     return date;
   };
 

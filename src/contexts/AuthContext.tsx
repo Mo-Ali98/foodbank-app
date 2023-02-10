@@ -2,14 +2,16 @@ import React, { useContext, useState, useEffect } from "react";
 import { User } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { FirebaseError } from "@firebase/util";
 import { IOrganisation } from "../models/organisation";
+import { notificationError } from "../components/notifications";
 
 interface ContextProps {
   user?: User;
   setUser: (user: User) => void;
   authenticated: boolean;
   loadingAuthState: boolean;
-  signUp: (email: string, password: string, OrginisationName: string) => void;
+  signUp: (email: string, password: string, OrganisationName: string) => void;
   logIn: (email: string, password: string) => void;
   logOut: () => void;
 }
@@ -52,7 +54,7 @@ export const AuthProvider = ({ children }: any) => {
   const signUp = async (
     email: string,
     password: string,
-    OrginisationName: string
+    OrganisationName: string
   ) => {
     try {
       const { user: userInfo } = await auth.createUserWithEmailAndPassword(
@@ -63,14 +65,18 @@ export const AuthProvider = ({ children }: any) => {
       if (userInfo) {
         const newOrg: IOrganisation = {
           emailAddress: userInfo?.email || "",
-          orgName: OrginisationName,
+          orgName: OrganisationName,
         };
 
-        await setDoc(doc(db, "organisation", userInfo?.uid || ""), newOrg);
-        await setDoc(doc(db, "events", userInfo?.uid || ""), {});
+        await setDoc(doc(db, "organisation", userInfo.uid), newOrg);
+        await setDoc(doc(db, "events", userInfo.uid), {});
       }
     } catch (error) {
       console.error(error);
+      if (error instanceof FirebaseError) {
+        notificationError(error.message);
+        console.error(error.code, error.cause, error.message);
+      }
     }
   };
 
