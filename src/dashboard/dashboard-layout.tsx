@@ -1,7 +1,8 @@
 import { DocumentData } from "firebase/firestore";
 import React from "react";
 import logo from "../assets/logo-transparent.png";
-import { SidebarItem } from "../components/SidebarItem";
+import { SidebarContainer } from "../components/sidebar/sidebar";
+import { SidebarItem } from "../components/sidebar/SidebarItem";
 import { useAuth } from "../contexts/AuthContext";
 import { useDashboard } from "../contexts/dashboard-context";
 import "./dashboard.css";
@@ -30,52 +31,7 @@ export const DashboardLayout: React.FC<Props> = ({
 
   return (
     <div className="d-flex flex-row">
-      <div className="sidebar">
-        <div className="sidebar-container">
-          <img
-            src={logo}
-            alt="Volunteria"
-            width={"100px"}
-            height={"100px"}
-            loading={"lazy"}
-          />
-
-          <p>{OrgUserData?.orgName}</p>
-          <SidebarItem
-            onClick={() => {
-              setCreateEvent(false);
-              setViewVolunteers(false);
-              setViewEvents(true);
-            }}
-            text={"View events"}
-            isActive={viewEvents}
-            disabled={loading}
-          ></SidebarItem>
-          <SidebarItem
-            onClick={() => {
-              setCreateEvent(false);
-              setViewEvents(false);
-              setViewVolunteers(true);
-            }}
-            text={"View volunteers"}
-            isActive={viewVolunteers}
-            disabled={loading}
-          ></SidebarItem>
-          <SidebarItem
-            onClick={() => {
-              setCreateEvent(true);
-              setViewEvents(false);
-              setViewVolunteers(false);
-            }}
-            text={"Create event"}
-            isActive={createEvent}
-            disabled={loading}
-          ></SidebarItem>
-          <button className="button-3 mt-auto" onClick={logOut}>
-            LOGOUT
-          </button>
-        </div>
-      </div>
+      <SidebarContainer OrgUserData={OrgUserData} loading={loading} />
       <main className="main">
         <div className="main-navbar">
           <nav className="navbar navbar-expand-lg navbar-light bg-white px-4">

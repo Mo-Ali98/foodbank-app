@@ -144,7 +144,7 @@ export const Dashboard = () => {
   );
 
   return (
-    <DashboardLayout OrgUserData={OrgUserData}>
+    <DashboardLayout OrgUserData={OrgUserData} loading={loading}>
       <div className="Main-content">
         {viewEvents && (
           <div className="d-flex flex-column align-content-center justify-content-center mt-5">

@@ -1,5 +1,5 @@
 import React from "react";
-import "./sidebar-item.css";
+import "./sidebar.css";
 
 interface SidebarItemProps {
   loading?: boolean;
