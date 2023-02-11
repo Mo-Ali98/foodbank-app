@@ -5,6 +5,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "@firebase/util";
 import { IOrganisation } from "../models/organisation";
 import { notificationError } from "../components/notifications";
+import { useNavigate } from "react-router-dom";
 
 interface ContextProps {
   user?: User;
@@ -27,6 +28,8 @@ const AuthContext = React.createContext<ContextProps>({
 });
 
 export const AuthProvider = ({ children }: any) => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<User | undefined>(() =>
     JSON.parse(localStorage.getItem("user") || "{}")
   );
@@ -71,6 +74,8 @@ export const AuthProvider = ({ children }: any) => {
         await setDoc(doc(db, "organisation", userInfo.uid), newOrg);
         await setDoc(doc(db, "events", userInfo.uid), {});
       }
+
+      navigate("/");
     } catch (error) {
       console.error(error);
       if (error instanceof FirebaseError) {
@@ -80,8 +85,17 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const logIn = (email: string, password: string) => {
-    return auth.signInWithEmailAndPassword(email, password);
+  const logIn = async (email: string, password: string) => {
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      if (error instanceof FirebaseError) {
+        notificationError(error.message);
+        console.error(error.code, error.cause, error.message, "here");
+      }
+    }
   };
 
   return (

@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { AuthLayoutPage } from "./auth-layout";
 
 export const Login = () => {
-  const navigate = useNavigate();
   const { logIn } = useAuth();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, seterror] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -17,58 +14,53 @@ export const Login = () => {
 
     try {
       setLoading(true);
-      await logIn(email, password);
-      navigate("/");
+      logIn(email, password);
+      setLoading(false);
     } catch (error) {
       console.error(error);
-      seterror("Login failed");
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <AuthLayoutPage login={true}>
-      <form onSubmit={submitForm}>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={loading}
-          />
+      <form
+        onSubmit={submitForm}
+        className="d-flex flex-column align-items-center p-2 w-100 gap-3"
+      >
+        <h4 className="text-center mb-1">Sign in</h4>
+        <div className="col" style={{ minWidth: "300px" }}>
+          <div className="row">
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Email address"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
+            />
+          </div>
+          <div className="row my-3">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
+            />
+          </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-            disabled={loading}
-          />
-        </div>
-
-        <div className="d-flex flex-column align-items-center justify-content-between">
-          <button type="submit" className="button-3 my-2" disabled={loading}>
-            {loading && (
-              <span
-                className="spinner-border spinner-border-sm mx-2"
-                role="status"
-                aria-hidden="true"
-              />
-            )}
-            Login
-          </button>
-        </div>
+        <button type="submit" className="button-3" disabled={loading}>
+          {loading && (
+            <span
+              className="spinner-border spinner-border-sm mx-2"
+              role="status"
+              aria-hidden="true"
+            />
+          )}
+          Login
+        </button>
       </form>
-      {error && <p className="my-3 text-danger">{error}</p>}
     </AuthLayoutPage>
   );
 };
