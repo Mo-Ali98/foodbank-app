@@ -46,6 +46,7 @@ body {
 }
 
 .button-3:disabled {
+  border: 2px solid #e3dfff;
   background-color: #e3dfff;
   color: white;
   cursor: not-allowed;

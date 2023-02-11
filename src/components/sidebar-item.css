@@ -1,0 +1,32 @@
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 12px;
+
+  border-radius: 4px;
+  width: 100%;
+
+  background-color: #e3dfff;
+  color: #7d57c2;
+}
+
+.sidebar-item:hover,
+.sidebar-item-selected {
+  color: white;
+  background-color: #7d57c2;
+}
+
+.sidebar-item-disabled {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 12px;
+
+  border-radius: 4px;
+  width: 100%;
+  background-color: #e3dfff;
+  color: #7d57c2;
+  opacity: 0.5;
+  cursor: not-allowed;
+}

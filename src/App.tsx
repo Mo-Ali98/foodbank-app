@@ -3,9 +3,10 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Login } from "./auth/login";
 import { SignUp } from "./auth/signup";
-import { Dashboard } from "./dashboard";
+import { Dashboard } from "./dashboard/dashboard";
 import { PrivateRoute } from "./privateRouter";
 import { Volunteer } from "./pages/Volunteer";
+import { DashBoardProvider } from "./contexts/dashboard-context";
 
 export const App = () => {
   return (
@@ -14,7 +15,9 @@ export const App = () => {
         path="/"
         element={
           <PrivateRoute>
-            <Dashboard />
+            <DashBoardProvider>
+              <Dashboard />
+            </DashBoardProvider>
           </PrivateRoute>
         }
       />
