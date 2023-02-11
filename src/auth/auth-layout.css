@@ -5,6 +5,10 @@
   gap: 10px 0px;
 }
 
+h4 {
+  color: #563d88;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;

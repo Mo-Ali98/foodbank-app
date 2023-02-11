@@ -66,7 +66,7 @@ export const SignUp = () => {
           <div className="row">
             <div className="form-check mt-3">
               <input className="form-check-input" type="checkbox" required />
-              <label className="form-check-label">
+              <label className="form-check-label" style={{ color: "#563d88" }}>
                 By continuing, you agree to the Terms of Use, Community
                 Guidelines and Privacy Policy
               </label>
