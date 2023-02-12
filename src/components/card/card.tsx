@@ -19,8 +19,11 @@ export const Card: React.FC<CardProps> = ({ title, description, date }) => {
         </div>
       </div>
 
-      <div className="events-card-footer">
-        <p>{date}</p>
+      <div className="w-100">
+        <div className="divider" />
+        <div className="events-card-footer">
+          <p>{date}</p>
+        </div>
       </div>
     </div>
   );
