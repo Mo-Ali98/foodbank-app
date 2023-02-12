@@ -1,15 +1,6 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  DocumentData,
-  getDoc,
-  getDocs,
-} from "firebase/firestore";
-
-import React, { useEffect, useState } from "react";
+import { DocumentData } from "firebase/firestore";
+import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { db } from "../firebase/firebase";
 import { IEvent } from "../models/Event";
 import { IVolunteer } from "../models/Volunteer";
 import "./dashboard.css";
@@ -20,7 +11,14 @@ import { useDashboard } from "../contexts/dashboard-context";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const {
+    user,
+    orgUserData,
+    eventsData,
+    volunteerData,
+    loading,
+    createNewEvent,
+  } = useAuth();
 
   const {
     viewEvents,
@@ -31,66 +29,16 @@ export const Dashboard = () => {
     viewVolunteers,
   } = useDashboard();
 
-  const [OrgUserData, setOrgUserData] = useState<DocumentData>();
-  const [EventsData, setEventData] = useState<DocumentData>();
-  const [VolunteerData, setVolunteerData] = useState<DocumentData>();
-
   const [eventName, setEventName] = useState<string>("");
   const [EventDescription, setEventDescription] = useState<string>("");
   const [EventLocation, setEventLocation] = useState<string>("");
   const [EventDate, setEventDate] = useState<string>("");
-
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    getData();
-    // eslint-disable-next-line
-  }, [user]);
-
-  const getData = async () => {
-    try {
-      setLoading(true);
-
-      if (user) {
-        //Fetch user/ org data
-        const orgRef = doc(db, "organisation", user.uid);
-        const orgSnap = await getDoc(orgRef);
-        const orgData = orgSnap.data();
-        setOrgUserData(orgData);
-
-        //fetch events
-        const eventsRef = collection(db, `events`);
-        const eventsQuerySnap = await getDocs(eventsRef);
-        setEventData(
-          eventsQuerySnap.docs.filter((doc) => {
-            const data = doc.data();
-            return data.OrgId === user.uid;
-          })
-        );
-
-        //Fetch volunteers
-        const VolunteersRef = collection(db, `Volunteer`);
-        const volunteersQuerySnap = await getDocs(VolunteersRef);
-        setVolunteerData(
-          volunteersQuerySnap.docs.filter((doc) => {
-            const data = doc.data();
-            return data.orgID === user.uid;
-          })
-        );
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     // Preventing the page from reloading
     e.preventDefault();
 
     try {
-      setLoading(true);
       if (user) {
         const newEvent: IEvent = {
           EventName: eventName,
@@ -100,20 +48,17 @@ export const Dashboard = () => {
           EventLink: `/volunteer/${user.uid}`,
           OrgId: user.uid,
         };
-        await addDoc(collection(db, "events"), newEvent);
+        createNewEvent(newEvent);
       }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      getData();
       setCreateEvent(false);
       setViewVolunteers(false);
       setViewEvents(true);
-      setLoading(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const renderEvents = EventsData?.map((doc: DocumentData, index: any) => {
+  const renderEvents = eventsData.map((doc: DocumentData, index: any) => {
     const data: IEvent = doc.data();
     return (
       <li key={doc.id} className="list-group-item">
@@ -126,11 +71,11 @@ export const Dashboard = () => {
     );
   });
 
-  const renderVolunteers = VolunteerData?.map(
+  const renderVolunteers = volunteerData.map(
     (doc: DocumentData, index: any) => {
       const data: IVolunteer = doc.data();
       return (
-        <li key={doc.id} className="list-group-item">
+        <li key={doc.id + index} className="list-group-item">
           <div className="d-flex align-items-center justify-content-between">
             <span>
               Name: {data.firstName} {data.lastName}
@@ -143,8 +88,14 @@ export const Dashboard = () => {
     }
   );
 
+  if (loading) {
+    <DashboardLayout OrgUserData={orgUserData} loading={loading}>
+      <div className="Main-content">Loading...</div>
+    </DashboardLayout>;
+  }
+
   return (
-    <DashboardLayout OrgUserData={OrgUserData} loading={loading}>
+    <DashboardLayout OrgUserData={orgUserData} loading={loading}>
       <div className="Main-content">
         {viewEvents && (
           <div className="d-flex flex-column align-content-center justify-content-center mt-5">
@@ -163,11 +114,11 @@ export const Dashboard = () => {
               </Link>
             </span>
 
-            {EventsData?.length !== 0 ? (
+            {eventsData.length !== 0 ? (
               <div className="card" style={{ width: "100%" }}>
                 <div className="card-header d-flex justify-content-between">
                   <div>Events Created: </div>
-                  <div>Number of events: {EventsData?.length}</div>
+                  <div>Number of events: {eventsData.length}</div>
                 </div>
                 <ul className="list-group list-group-flush">{renderEvents}</ul>
               </div>
@@ -181,11 +132,11 @@ export const Dashboard = () => {
 
         {viewVolunteers && (
           <div className="d-flex flex-column align-content-center justify-content-center mt-5">
-            {VolunteerData?.length !== 0 ? (
+            {volunteerData.length !== 0 ? (
               <div className="card" style={{ width: "100%" }}>
                 <div className="card-header d-flex justify-content-between">
                   <div>Volunteers: </div>
-                  <div>Number of volunteers: {VolunteerData?.length}</div>
+                  <div>Number of volunteers: {volunteerData.length}</div>
                 </div>
                 <ul className="list-group list-group-flush">
                   {renderVolunteers}
