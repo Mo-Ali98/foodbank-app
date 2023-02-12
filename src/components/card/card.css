@@ -1,0 +1,39 @@
+.events-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 8px;
+
+  width: 300px;
+  height: 225px;
+
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: white;
+}
+
+.events-card-header {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.events-card-header > p {
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.events-card-desc > p {
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.events-card-footer > p {
+  font-weight: 400;
+  font-size: 12px;
+  margin-bottom: 0;
+}

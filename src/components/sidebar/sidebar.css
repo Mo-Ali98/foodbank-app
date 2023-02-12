@@ -1,7 +1,7 @@
 .sidebar {
   display: block;
   flex-shrink: 0;
-  height: 100vh;
+  min-height: 100vh;
   min-height: 100vh;
   padding: 24px 20px;
   position: relative;

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { DashboardLayout } from "./dashboard-layout";
 import { useDashboard } from "../contexts/dashboard-context";
+import { Card } from "../components/card/card";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -61,13 +62,12 @@ export const Dashboard = () => {
   const renderEvents = eventsData.map((doc: DocumentData, index: any) => {
     const data: IEvent = doc.data();
     return (
-      <li key={doc.id} className="list-group-item">
-        <div className="d-flex align-items-center justify-content-between">
-          <span>Name: {data.EventName}</span>
-          <span>Description: {data.EventDescription}</span>
-          <span>Date: {data.EventDate}</span>
-        </div>
-      </li>
+      <Card
+        key={doc.id + index}
+        title={data.EventName}
+        description={data.EventDescription}
+        date={data.EventDate}
+      />
     );
   });
 
@@ -89,20 +89,31 @@ export const Dashboard = () => {
   );
 
   if (loading) {
-    <DashboardLayout OrgUserData={orgUserData} loading={loading}>
-      <div className="Main-content">Loading...</div>
-    </DashboardLayout>;
+    return (
+      <DashboardLayout OrgUserData={orgUserData} loading={loading}>
+        <div className="Main-content">
+          <div className="d-flex flex-column align-items-center justify-content-center w-100 h-100">
+            <span
+              className="spinner-border spinner-border-sm mx-2"
+              role="status"
+              aria-hidden="true"
+              style={{ color: "#7d57c2" }}
+            />{" "}
+          </div>
+        </div>
+      </DashboardLayout>
+    );
   }
 
   return (
     <DashboardLayout OrgUserData={orgUserData} loading={loading}>
       <div className="Main-content">
         {viewEvents && (
-          <div className="d-flex flex-column align-content-center justify-content-center mt-5">
-            <span className="mb-4">
-              Link to volunteer page for events -{" "}
+          <div className="d-flex flex-column align-content-center justify-content-center mx-auto">
+            <h3>Your Events</h3>
+            <p className="mb-4">
+              Link to volunteer page for your events{" "}
               <Link
-                className="lead"
                 onClick={(e) => {
                   e.preventDefault();
                   navigate(`/volunteer/${user?.uid}`);
@@ -112,16 +123,10 @@ export const Dashboard = () => {
               >
                 here
               </Link>
-            </span>
+            </p>
 
             {eventsData.length !== 0 ? (
-              <div className="card" style={{ width: "100%" }}>
-                <div className="card-header d-flex justify-content-between">
-                  <div>Events Created: </div>
-                  <div>Number of events: {eventsData.length}</div>
-                </div>
-                <ul className="list-group list-group-flush">{renderEvents}</ul>
-              </div>
+              <div className="card-container">{renderEvents}</div>
             ) : (
               <div className="d-flex align-items-center justify-content-center">
                 <p className="lead">No events created yet</p>
