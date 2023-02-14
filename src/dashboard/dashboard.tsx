@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { DashboardLayout } from "./dashboard-layout";
 import { useDashboard } from "../contexts/dashboard-context";
-import { Card } from "../components/card/card";
+import { Card, VolunteerCard } from "../components/card/card";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -75,11 +75,10 @@ export const Dashboard = () => {
     (doc: DocumentData, index: any) => {
       const data: IVolunteer = doc.data();
       return (
-        <Card
+        <VolunteerCard
           key={doc.id + index}
-          title={`${data.firstName} ${data.lastName}`}
-          description={""}
-          date={`${data.email} ${data.number}`}
+          name={`${data.firstName} ${data.lastName}`}
+          contact={`${data.email} ${data.number}`}
         />
       );
     }
@@ -137,7 +136,9 @@ export const Dashboard = () => {
         )}
 
         {viewVolunteers && (
-          <div className="d-flex flex-column align-content-center justify-content-center mt-5">
+          <div className="d-flex flex-column align-content-center justify-content-center">
+            <h3>Your Volunteers</h3>
+
             {volunteerData.length !== 0 ? (
               <div className="card-container">{renderVolunteers2}</div>
             ) : (

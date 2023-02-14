@@ -28,3 +28,30 @@ export const Card: React.FC<CardProps> = ({ title, description, date }) => {
     </div>
   );
 };
+
+interface VolunteerCardProps {
+  name: string;
+  contact: string;
+}
+
+export const VolunteerCard: React.FC<VolunteerCardProps> = ({
+  name,
+  contact,
+}) => {
+  return (
+    <div className="volunteer-card">
+      <div className="d-flex flex-column gap-2">
+        <div className="events-card-header">
+          <p>{name}</p>
+        </div>
+      </div>
+
+      <div className="w-100">
+        <div className="divider" />
+        <div className="events-card-footer">
+          <p>{contact}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
