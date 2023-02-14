@@ -23,8 +23,8 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
     setViewVolunteers,
     viewVolunteers,
   } = useDashboard();
+  const { logOut, eventsData, volunteerData } = useAuth();
 
-  const { logOut } = useAuth();
   return (
     <div className="sidebar">
       <div className="sidebar-container">
@@ -53,20 +53,22 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
             setViewVolunteers(false);
             setViewEvents(true);
           }}
-          text={"View events"}
+          text={"Events"}
+          number={eventsData?.length}
           isActive={viewEvents}
           disabled={loading}
-        ></SidebarItem>
+        />
         <SidebarItem
           onClick={() => {
             setCreateEvent(false);
             setViewEvents(false);
             setViewVolunteers(true);
           }}
-          text={"View volunteers"}
+          text={"Volunteers"}
+          number={volunteerData?.length}
           isActive={viewVolunteers}
           disabled={loading}
-        ></SidebarItem>
+        />
         <SidebarItem
           onClick={() => {
             setCreateEvent(true);
@@ -76,7 +78,7 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
           text={"Create event"}
           isActive={createEvent}
           disabled={loading}
-        ></SidebarItem>
+        />
         <button className="button-3 mt-auto" onClick={logOut}>
           LOGOUT
         </button>

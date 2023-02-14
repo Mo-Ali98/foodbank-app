@@ -71,19 +71,16 @@ export const Dashboard = () => {
     );
   });
 
-  const renderVolunteers = volunteerData.map(
+  const renderVolunteers2 = volunteerData.map(
     (doc: DocumentData, index: any) => {
       const data: IVolunteer = doc.data();
       return (
-        <li key={doc.id + index} className="list-group-item">
-          <div className="d-flex align-items-center justify-content-between">
-            <span>
-              Name: {data.firstName} {data.lastName}
-            </span>
-            <span>Email: {data.email}</span>
-            <span>Number: {data.number}</span>
-          </div>
-        </li>
+        <Card
+          key={doc.id + index}
+          title={`${data.firstName} ${data.lastName}`}
+          description={""}
+          date={`${data.email} ${data.number}`}
+        />
       );
     }
   );
@@ -118,7 +115,11 @@ export const Dashboard = () => {
                   e.preventDefault();
                   navigate(`/volunteer/${user?.uid}`);
                 }}
-                style={{ color: "#7d57c2", cursor: "pointer" }}
+                style={{
+                  color: "#7d57c2",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                }}
                 to={""}
               >
                 here
@@ -138,15 +139,7 @@ export const Dashboard = () => {
         {viewVolunteers && (
           <div className="d-flex flex-column align-content-center justify-content-center mt-5">
             {volunteerData.length !== 0 ? (
-              <div className="card" style={{ width: "100%" }}>
-                <div className="card-header d-flex justify-content-between">
-                  <div>Volunteers: </div>
-                  <div>Number of volunteers: {volunteerData.length}</div>
-                </div>
-                <ul className="list-group list-group-flush">
-                  {renderVolunteers}
-                </ul>
-              </div>
+              <div className="card-container">{renderVolunteers2}</div>
             ) : (
               <div className="d-flex align-items-center justify-content-center">
                 <p className="lead">No volunteers yet</p>
