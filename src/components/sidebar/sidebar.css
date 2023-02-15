@@ -1,12 +1,12 @@
 .sidebar {
   display: block;
   flex-shrink: 0;
-  height: 100vh;
+  min-height: 100vh;
   min-height: 100vh;
   padding: 24px 20px;
   position: relative;
   width: 200px;
-  background-color: #f0f2ff;
+  background-color: #f7f7fb;
   border-right: 1px solid #e1e5ff;
 }
 
@@ -24,6 +24,7 @@
   align-items: center;
   cursor: pointer;
   padding: 4px 12px;
+  justify-content: space-between;
 
   border-radius: 4px;
   width: 100%;
@@ -50,6 +51,21 @@
   color: #7d57c2;
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  background: white;
+  padding: 4px;
+  font-size: 12px;
+  color: black;
 }
 
 @media screen and (max-width: 768px) {

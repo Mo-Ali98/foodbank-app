@@ -18,7 +18,7 @@ export const DashboardLayout: React.FC<Props> = ({
   loading,
   children,
 }) => {
-  const { logOut } = useAuth();
+  const { logOut, eventsData, volunteerData } = useAuth();
 
   const {
     viewEvents,
@@ -53,20 +53,22 @@ export const DashboardLayout: React.FC<Props> = ({
                       setViewVolunteers(false);
                       setViewEvents(true);
                     }}
-                    text={"View events"}
+                    text={"Events"}
+                    number={eventsData?.length}
                     isActive={viewEvents}
                     disabled={loading}
-                  ></SidebarItem>
+                  />
                   <SidebarItem
                     onClick={() => {
                       setCreateEvent(false);
                       setViewEvents(false);
                       setViewVolunteers(true);
                     }}
-                    text={"View volunteers"}
+                    text={"Volunteers"}
+                    number={volunteerData?.length}
                     isActive={viewVolunteers}
                     disabled={loading}
-                  ></SidebarItem>
+                  />
                   <SidebarItem
                     onClick={() => {
                       setCreateEvent(true);
@@ -76,7 +78,7 @@ export const DashboardLayout: React.FC<Props> = ({
                     text={"Create event"}
                     isActive={createEvent}
                     disabled={loading}
-                  ></SidebarItem>
+                  />
                   <button className="button-3 mx-2" onClick={logOut}>
                     LOGOUT
                   </button>

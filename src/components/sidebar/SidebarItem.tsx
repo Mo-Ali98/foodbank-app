@@ -6,8 +6,8 @@ interface SidebarItemProps {
   disabled?: boolean;
   isActive?: boolean;
   onClick?: () => void;
-  children?: React.ReactNode;
   text: string;
+  number?: number;
 }
 
 export const SidebarItem: React.FC<SidebarItemProps> = ({
@@ -15,18 +15,22 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
   disabled,
   isActive,
   onClick,
-  children,
   text,
+  number,
 }) => {
+  const renderNumber = () => {
+    return <div className="counter">{number}</div>;
+  };
+
   if (loading || disabled) {
-    return <div className="sidebar-item-disabled"> {text}</div>;
+    return <div className="sidebar-item-disabled">{text}</div>;
   }
 
   if (isActive) {
     return (
       <div className="sidebar-item sidebar-item-selected" onClick={onClick}>
         {text}
-        {children}
+        {number && renderNumber()}
       </div>
     );
   }
@@ -34,7 +38,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
   return (
     <div className="sidebar-item" onClick={onClick}>
       {text}
-      {children}
+      {number && renderNumber()}
     </div>
   );
 };
