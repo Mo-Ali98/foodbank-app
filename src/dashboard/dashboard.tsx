@@ -137,7 +137,7 @@ export const Dashboard = () => {
 
         {viewVolunteers && (
           <div className="d-flex flex-column align-content-center justify-content-center">
-            <h3>Your Volunteers</h3>
+            <h3 className="mb-4">Your Volunteers</h3>
 
             {volunteerData.length !== 0 ? (
               <div className="card-container">{renderVolunteers2}</div>
