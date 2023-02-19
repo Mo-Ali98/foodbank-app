@@ -107,23 +107,25 @@ export const Dashboard = () => {
         {viewEvents && (
           <div className="d-flex flex-column align-content-center justify-content-center mx-auto">
             <h3>Your Events</h3>
-            <p className="mb-4">
-              Link to volunteer page for your events{" "}
-              <Link
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate(`/volunteer/${user?.uid}`);
-                }}
-                style={{
-                  color: "#7d57c2",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                }}
-                to={""}
-              >
-                here
-              </Link>
-            </p>
+            {eventsData.length !== 0 && (
+              <p className="mb-4">
+                Link to volunteer page for your events{" "}
+                <Link
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/volunteer/${user?.uid}`);
+                  }}
+                  style={{
+                    color: "#7d57c2",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                  }}
+                  to={""}
+                >
+                  here
+                </Link>
+              </p>
+            )}
 
             {eventsData.length !== 0 ? (
               <div className="card-container">{renderEvents}</div>

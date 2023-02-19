@@ -19,6 +19,9 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
   number,
 }) => {
   const renderNumber = () => {
+    if (!number) {
+      return null;
+    }
     return <div className="counter">{number}</div>;
   };
 
@@ -30,7 +33,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
     return (
       <div className="sidebar-item sidebar-item-selected" onClick={onClick}>
         {text}
-        {number && renderNumber()}
+        {renderNumber()}
       </div>
     );
   }
@@ -38,7 +41,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
   return (
     <div className="sidebar-item" onClick={onClick}>
       {text}
-      {number && renderNumber()}
+      {renderNumber()}
     </div>
   );
 };

@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 import { IVolunteer } from "../models/Volunteer";
 import logo from "../assets/logo-small.png";
-import foodBankImage from "../assets/masjid-food-bank.jpg";
 
 import "./volunteer.css";
 
@@ -21,6 +20,7 @@ interface IBtn {
 }
 
 const Title = styled.div`
+  color: #7d57c2;
   font-size: 24px;
 `;
 
@@ -40,7 +40,7 @@ const SubmitSection = styled.div`
 `;
 
 const CardContainer = styled.div`
-  padding-top: 10%;
+  padding-top: 5px;
 `;
 
 const CardTitle = styled.div`
@@ -179,21 +179,7 @@ export const Volunteer = () => {
       <div className="container px-5 mt-2">
         <div className="header">
           <div className="d-flex flex-column">
-            <h3>{orgData?.orgName}</h3>
-            <p style={{ maxWidth: "650px" }}>
-              Food banks are designed to provide short-term, emergency support
-              with food during a crisis. They aim to relieve that immediate
-              pressure by providing food, but also offer additional support so
-              that people don’t need to use the food bank again in the future.
-            </p>
-          </div>
-          <div className="d-flex align-items-center">
-            <img
-              src={foodBankImage}
-              alt="FoodBank"
-              className="org-image center"
-              loading={"lazy"}
-            />
+            <h3>{orgData?.orgName} events</h3>
           </div>
         </div>
 
